@@ -20,6 +20,9 @@ I've made this tool so I could send pixel art to my SO, just as a fun way to lea
 - [x] Version 1 🎉
 - [ ] Drag on mobile
 - [ ] minify .html file
+- [ ] Setup proper JSON object
+- [ ] Load current image
+- [ ] Undo/redo
 
 ## Tools used
 This tool is build using Vue.js and there is some SCSS to easily write CSS

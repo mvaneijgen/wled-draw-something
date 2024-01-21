@@ -130,11 +130,8 @@ const App = {
     // 🐵 Send API request
     //--------------------------------//
     post: function () {
-      console.warn(`Fetching ${this.url}`);
-      console.warn(this.json);
       fetch(this.url, {
         method: "POST",
-        mode: "cors",
         body: this.json,
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -153,7 +150,6 @@ const App = {
     get: function () {
       fetch(this.url, {
         method: "GET",
-        mode: "cors",
         headers: {
           "Content-type": "application/json; charset=UTF-8"
         }
@@ -165,6 +161,7 @@ const App = {
           console.log(data);
           this.x = data.info.leds.matrix.w;
           this.y = data.info.leds.matrix.h;
+          this.options = false;
           this.loading = false;
           if (!localStorage.fill) {
             this.setupColors();
@@ -180,7 +177,6 @@ const App = {
   watch: {
     url: function (newData) {
       this.get();
-      localStorage.url = newData;
     },
     //--------------------------------//
     // 💾 Save everything to local storage
@@ -200,11 +196,7 @@ const App = {
     // END 💾 Save everything to local storage --------------//
   },
   mounted() {
-    if (localStorage.url) {
-      this.url = localStorage.url;
-    } else {
-      this.url = `${window.location.host}/json`;
-    }
+    this.url = `http://${window.location.host}/json`;
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
@@ -215,10 +207,6 @@ const App = {
     if (localStorage.timer) this.timer = localStorage.timer;
     // END 💾 Get everything from local storage  --------------//
   },
-  created() {
-    // this.fill = [];
-    this.get();
-  }
 };
 
 createApp(App).mount("#app");
