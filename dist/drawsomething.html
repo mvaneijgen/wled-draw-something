@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>WLED Draw Something</title>
+    <style>button,
+hr,
+input {
+  overflow: visible;
+}
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+}
+
+progress,
+sub,
+sup {
+  vertical-align: baseline;
+}
+
+html {
+  font-family: system-ui, sans-serif;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+menu,
+article,
+aside,
+details,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+figcaption,
+figure,
+main {
+  display: block;
+}
+
+figure {
+  margin: 1em 40px;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+dfn {
+  font-style: italic;
+}
+
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+img {
+  border-style: none;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+[type=submit],
+[type=reset],
+button,
+html [type=button] {
+  -webkit-appearance: button;
+}
+
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner,
+button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring,
+button:-moz-focusring {
+  outline: ButtonText dotted 1px;
+}
+
+fieldset {
+  border: 1px solid silver;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type=search]::-webkit-search-cancel-button,
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+summary {
+  display: list-item;
+}
+
+[hidden],
+template {
+  display: none;
+}
+
+
+body {
+  background-color: #19233b;
+  color: #fff;
+}
+
+svg {
+  width: 95vmin;
+  cursor: pointer;
+}
+@media screen and (min-width: 999px) {
+  svg {
+    width: 50vmin;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+label {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.alloy-input-group {
+  grid-column: 1/span 1;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.alloy-input-group label {
+  display: block;
+  margin-bottom: 15px;
+}
+.alloy-input-group input {
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 7.5px;
+}
+.alloy-input-group [type=color] {
+  padding: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 0;
+}
+
+select {
+  width: 100%;
+  -webkit-appearance: none;
+  display: block;
+}
+
+.radioGroup {
+  font-family: "dashicons";
+  display: inline-block;
+  position: relative;
+}
+.radioGroup label {
+  width: 30px;
+  display: inline-block;
+  transition: transform, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  font-size: 24px;
+}
+.radioGroup input[type=radio] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+.radioGroup input[type=radio]:checked + label {
+  color: #f53;
+  transform: scale(1.4);
+}
+
+select {
+  padding: 10px 15px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 30px;
+}
+ul li {
+  list-style: none;
+}
+
+#app {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+@media screen and (min-width: 999px) {
+  #app {
+    flex-direction: row;
+  }
+}
+#app > * {
+  overflow-y: scroll;
+}
+
+.view {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+aside {
+  order: 2;
+  color: #fff;
+  background-color: #0c162d;
+}
+@media screen and (min-width: 999px) {
+  aside {
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: 300px;
+  }
+}
+aside > .inner {
+  height: 100%;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+  flex-direction: column;
+}
+@media screen and (max-width: 999px) {
+  aside > .inner {
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+}
+@media screen and (min-width: 999px) {
+  aside > .inner {
+    gap: 30px;
+  }
+}
+aside .controls {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+}
+@media screen and (max-width: 999px) {
+  aside .controls {
+    justify-content: center;
+    flex-direction: row;
+    gap: 3%;
+    flex-basis: 100%;
+  }
+  aside .controls > * {
+    flex-basis: 30%;
+  }
+}
+aside .colorPallete {
+  width: 100%;
+}
+aside .optionsToggle {
+  background-color: transparent;
+  text-decoration: underline;
+  padding: 0;
+  text-align: left;
+}
+aside .title {
+  margin-bottom: 30px;
+}
+aside .title h1 {
+  opacity: 0.7;
+  font-size: 30px;
+}
+aside .title h3 {
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-weight: normal;
+  transform: translatex(2px) translatey(-5px);
+}
+aside .title h1,
+aside .title h3 {
+  margin: 0;
+}
+@media screen and (max-width: 999px) {
+  aside .title,
+  aside #logo {
+    order: 10;
+    flex-basis: 50%;
+  }
+}
+aside #logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+}
+@media screen and (max-width: 999px) {
+  aside #logo {
+    justify-content: flex-end;
+  }
+}
+aside #logo img {
+  margin-right: 10px;
+  width: 70px;
+}
+aside #logo span {
+  display: block;
+  font-size: 12px;
+}
+aside #logo span:last-of-type {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.input label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.input label.description {
+  display: inline;
+  font-weight: 40;
+}
+.input button {
+  width: 49%;
+  margin-bottom: 0;
+  margin: 0 1px;
+}
+.input button:first-child {
+  background-color: #ff6647;
+}
+.input input {
+  width: 100%;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #f53;
+  cursor: pointer;
+}
+input[type=range]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+input[type=radio],
+input[type=checkbox] {
+  width: auto;
+}
+
+input[type=checkbox] {
+  transform: translateY(6px);
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #f53;
+  color: #fff;
+  font-weight: 700;
+  border: 0;
+  margin-bottom: 20px;
+  padding: 30px;
+}
+
+.btn-alt {
+  background-color: #ccc;
+  color: #0c162d;
+  padding: 10px;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  color: #666;
+}
+
+#copyFunctionContent {
+  height: 0;
+  overflow: hidden;
+}
+#copyFunctionContent > * {
+  height: 0;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice {
+  background-color: #f53;
+  padding: 30px;
+  max-width: 500px;
+}/*# sourceMappingURL=style.css.map */</style>
+  </head>
+  <body>
+    <div id="app">
+      <aside>
+        <div class="inner">
+          <div class="title">
+            <h1>{{ title }}</h1>
+            <h3>Version {{version}}</h3>
+          </div>
+          <div class="controls">
+            <div class="alloy-input-group">
+              <label for="color">Color</label>
+              <input type="color" id="color" name="head" v-model.lazy="color">
+            </div>
+
+            <div class="alloy-input-group">
+              <label for="pallete">Pallete hisotry</label>
+              <svg class="colorPallete" :view-box.camel="viewBoxPallete">
+                <g v-for="(item, yIndex) in yPallete">
+                  <rect v-for="(item, xIndex) in xPallete" :key="xIndex"
+                    :x="size * xIndex" :y="size * yIndex" :width="size"
+                    :height="size" stroke="#0c162d"
+                    :fill="fillPallete[xIndex + xPallete * yIndex]"
+                    @click="changeColor"
+                    :data-number="xIndex + xPallete*yIndex" />
+                </g>
+              </svg>
+            </div>
+            <div class="extra">
+              <button class="optionsToggle"
+                @click="options = !options">View
+                settings</button>
+              <ul v-if="options">
+                <li><strong>URL</strong> {{url}}</li>
+                <li><strong>Matrix width</strong> {{x}}</li>
+                <li><strong>Matrix height</strong> {{y}}</li>
+              </ul>
+              <div class="alloy-input-group" v-if="options">
+                <label for="timer">timer</label>
+                <input type="number" id="timer" v-model="timer">
+              </div>
+            </div>
+          </div>
+          <button @click="post">Send 🚀</button>
+          <button class="btn-alt" @click="clear">Clear ❌</button>
+
+          <a href="https://studioalloy.nl" id="logo">
+            <img src="https://studioalloy.nl/_nuxt/img/a293d3c.svg">
+            <div>
+              <span>Powered by</span>
+              <span>Studio Alloy</span>
+            </div>
+          </a>
+        </div>
+      </aside>
+      <div class="container" v-if="loading">
+        <div class="notice">
+          <h3>We're currently loading your settings. Make sure your matrix is
+            setup correclty. <i>Fetching {{url}}</i></h3>
+        </div>
+      </div>
+      <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
+        v-if="!loading">
+        <svg :view-box.camel="viewBox">
+          <g v-for="(item, yIndex) in y">
+            <rect v-for="(item, xIndex) in x" :key="xIndex" :x="size * xIndex"
+              :y="size * yIndex" :width="size" :height="size" stroke="#19233b"
+              :fill="fill[xIndex + x*yIndex]" @mousedown="setColor"
+              @mouseover="dragColor"
+              @contextmenu.prevent="rightClick"
+              :data-number="xIndex + x*yIndex" />
+          </g>
+        </svg>
+      </div>
+
+    </div>
+    <script src='https://unpkg.com/vue@3/dist/vue.global.js'></script>
+    <script>console.clear();
+const { createApp } = Vue;
+
+const App = {
+  data() {
+    return {
+      loading: true,
+      title: "Draw something",
+      version: "1.0",
+      url: "",
+      url: "http://wled.local/json",
+      size: 10,
+      x: 1,
+      y: 1,
+      xPallete: 4,
+      yPallete: 2,
+      timer: 0,
+      color: "#ff2500",
+      isMouseDown: false,
+      fill: [],
+      // 🎨 Default color pallet
+      fillPallete: [
+        "#ff2500",
+        "#ff9305",
+        "#fdfc00",
+        "#20f80f",
+        "#0533ff",
+        "#ffffff",
+        "#929292",
+        "#000000"
+      ],
+      options: false,
+    };
+  },
+  computed: {
+    viewBox: function () {
+      return `0 0 ${this.size * this.x} ${this.size * this.y}`;
+    },
+    viewBoxPallete: function () {
+      return `0 0 ${this.size * this.xPallete} ${this.size * this.yPallete}`;
+    },
+    //--------------------------------//
+    // Convert fill to correct array for JSON API
+    //--------------------------------//
+    seg: function () {
+      let format = this.fill
+        .map((i) => `"${i}"`)
+        .join(",")
+        .replaceAll("#", "");
+
+      return format;
+    },
+    // END Convert fill to correct array for JSON API --------------//
+    setTimer: function () {
+      let string = ``;
+      if (this.timer > 0) {
+        string = `"nl": {"on": true, "dur": ${this.timer}},`;
+      }
+      return string;
+    },
+    //--------------------------------//
+    // Create JSON body for POST
+    //--------------------------------//
+    json: function () {
+      return `{
+   "on": true,
+   "bri": 128, ${this.setTimer}
+   "v": true,
+   "seg": {
+      "i":[${this.seg}]
+   }
+}`;
+    }
+    // END Create JSON body for POST --------------//
+  },
+  methods: {
+    clear: function () {
+      this.fill = [];
+      this.setupColors();
+    },
+    //--------------------------------//
+    // Create grid and set default color to off
+    //--------------------------------//
+    setupColors: function () {
+      let string = "";
+      for (let y = 0; y < this.y; y++) {
+        for (let x = 0; x < this.x; x++) {
+          this.fill.push(`#000000`);
+        }
+      }
+    },
+    // END Create grid and set default color to off --------------//
+    // Update 🎨 pallete history
+    changeColor: function (e) {
+      this.color = e.target.getAttribute("fill");
+    },
+    //--------------------------------//
+    // 🖌️ Paint controls
+    //--------------------------------//
+    // Check if ✊  dragging
+    dragColor: function (e) {
+      if (this.isMouseDown) {
+        this.setColor(e);
+      }
+    },
+    mouseDown: function (e) {
+      this.isMouseDown = true;
+    },
+    mouseUp: function (e) {
+      this.isMouseDown = false;
+      this.post()
+    },
+    changeColor: function (e) {
+      this.color = e.target.getAttribute("fill");
+    },
+    // 🪣 fill color
+    setColor: function (e) {
+      localStorage.fill = this.fill.toString();
+      e.target.setAttribute("fill", this.color);
+      this.fill[e.target.dataset.number] = this.color;
+      if (!this.isMouseDown) {
+        this.post()
+      }
+    },
+    // 🖱️ Right click remove color
+    rightClick: function (e) {
+      e.target.setAttribute("fill", '#000000');
+      this.post();
+    },
+    // END 🖌️ Paint controls --------------//
+
+    //--------------------------------//
+    // 🐵 Send API request
+    //--------------------------------//
+    post: function () {
+      console.warn(`Fetching ${this.url}`);
+      console.warn(this.json);
+      fetch(this.url, {
+        method: "POST",
+        mode: "cors",
+        body: this.json,
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Fetch Error:", error);
+        });
+    },
+    get: function () {
+      console.warn(`Fetching ${this.url}`); // ! delete
+      fetch(this.url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          this.x = data.info.leds.matrix.w;
+          this.y = data.info.leds.matrix.h;
+          this.loading = false;
+          this.setupColors();
+        })
+        .catch((error) => {
+          console.error("Fetch Error:", error);
+        });
+    }
+    // END 🐵 Send API request --------------//
+  },
+  watch: {
+    //--------------------------------//
+    // 💾 Save everything to local storage
+    //--------------------------------//
+    color: function (newColor) {
+      // Update 🎨 pallete history
+      // TODO: Check if color is already in pallete then don't update
+      if (!this.fillPallete.includes(this.color)) {
+        this.fillPallete.pop();
+        this.fillPallete.unshift(this.color);
+        localStorage.fillPallete = this.fillPallete.toString();
+      }
+      localStorage.color = newColor;
+    },
+    timer: function (newData) {
+      localStorage.timer = newData;
+    }
+    // END 💾 Save everything to local storage --------------//
+  },
+  mounted() {
+    // * this.url = `${window.location.host}/json`;
+
+    //--------------------------------//
+    // 💾 Get everything from local storage
+    //--------------------------------//
+    // if (localStorage.url) this.url = localStorage.url; // Enable
+    if (localStorage.color) this.color = localStorage.color;
+    if (localStorage.fill) this.fill = localStorage.fill.split(",");;
+    if (localStorage.fillPallete) this.fillPallete = localStorage.fillPallete.split(",");
+    if (localStorage.timer) this.timer = localStorage.timer;
+    // END 💾 Get everything from local storage  --------------//
+  },
+  created() {
+    this.get();
+  }
+};
+
+createApp(App).mount("#app");
+</script>
+  </body>
+</html>

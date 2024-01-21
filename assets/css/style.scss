@@ -1,0 +1,393 @@
+@import "reset";
+
+$brand-dark: #344;
+$brand-light: #fff;
+$base-margin: 15px;
+$brand-one: #0ba;
+$brand-two: #f53;
+$brand-light: #fff;
+$brand-dark: #0c162d;
+$brand-dark-light: #19233b;
+
+$brake-point: 999px;
+
+/*# sourceMappingURL=normalize.min.css.map */
+body {
+  background-color: $brand-dark-light;
+  color: #fff;
+}
+
+svg {
+  width: 95vmin;
+  cursor: pointer;
+
+  @media screen and (min-width: $brake-point) {
+    width: 50vmin;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+label {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.alloy-input-group {
+  grid-column: 1 / span 1;
+  // padding: $base-margin;
+  margin-bottom: $base-margin;
+  width: 100%;
+
+  label {
+    display: block;
+    margin-bottom: $base-margin;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: $base-margin * 2;
+    padding: $base-margin/2;
+  }
+
+  [type="color"] {
+    padding: 0;
+    appearance: none;
+    border: 0;
+  }
+}
+
+select {
+  width: 100%;
+  -webkit-appearance: none;
+  display: block;
+}
+
+.radioGroup {
+  font-family: "dashicons";
+  display: inline-block;
+  position: relative;
+
+  label {
+    width: 30px;
+    display: inline-block;
+    transition: transform, color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    font-size: 24px;
+  }
+
+  input[type="radio"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    opacity: 0;
+
+    &:checked+label {
+      color: $brand-two;
+      transform: scale(1.4);
+    }
+  }
+}
+
+select {
+  padding: 10px 15px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 30px;
+
+  li {
+    list-style: none;
+  }
+}
+
+#app {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  @media screen and (min-width: $brake-point) {
+    flex-direction: row;
+  }
+
+  >* {
+    overflow-y: scroll;
+  }
+}
+
+.view {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+aside {
+  order: 2;
+  color: $brand-light;
+  background-color: $brand-dark;
+
+  @media screen and (min-width: $brake-point) {
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: 300px;
+  }
+
+  >.inner {
+    height: 100%;
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    flex-direction: column;
+
+    @media screen and (max-width: $brake-point) {
+      flex-flow: row wrap;
+      justify-content: space-between;
+    }
+
+    @media screen and (min-width: $brake-point) {
+      gap: 30px;
+    }
+  }
+
+  .controls {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    flex-flow: row wrap;
+
+    @media screen and (max-width: $brake-point) {
+      justify-content: center;
+      flex-direction: row;
+      gap: 3%;
+      flex-basis: 100%;
+
+      >* {
+        flex-basis: 30%;
+      }
+    }
+
+  }
+
+  .colorPallete {
+    width: 100%;
+  }
+
+  .optionsToggle {
+    background-color: transparent;
+    text-decoration: underline;
+    padding: 0;
+    text-align: left;
+  }
+
+  .title {
+    margin-bottom: 30px;
+
+    // @media screen and (max-width: $brake-point) {
+    //   order: 10;
+    // }
+
+    h1 {
+      opacity: 0.7;
+      font-size: 30px;
+      // line-height: 0.8em;
+    }
+
+    h3 {
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 2px;
+      font-weight: normal;
+      transform: translatex(2px) translatey(-5px);
+    }
+
+    h1,
+    h3 {
+      margin: 0;
+    }
+  }
+
+  .title,
+  #logo {
+
+    @media screen and (max-width: $brake-point) {
+      order: 10;
+      flex-basis: 50%;
+    }
+  }
+
+  #logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+
+    @media screen and (max-width: $brake-point) {
+      justify-content: flex-end;
+      // position: absolute;
+      // right: 30px;
+      // bottom: 30px;
+      // width: 100%;
+    }
+
+    img {
+      margin-right: 10px;
+      width: 70px;
+    }
+
+    span {
+      display: block;
+      font-size: 12px;
+
+      &:last-of-type {
+        font-weight: 700;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+form {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 20px;
+
+    &.description {
+      display: inline;
+      font-weight: 40;
+    }
+  }
+
+  button {
+    width: 49%;
+    margin-bottom: 0;
+    margin: 0 1px;
+
+    &:first-child {
+      background-color: lighten($brand-two, 4%);
+    }
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: $brand-two;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4caf50;
+    cursor: pointer;
+  }
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+}
+
+input[type="checkbox"] {
+  transform: translateY(6px);
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: $brand-two;
+  color: $brand-light;
+  font-weight: 700;
+  border: 0;
+  margin-bottom: 20px;
+  padding: 30px;
+}
+
+.btn-alt {
+  background-color: #ccc;
+  color: $brand-dark;
+  padding: 10px;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  color: #666;
+}
+
+#copyFunctionContent {
+  height: 0;
+  overflow: hidden;
+
+  >* {
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice {
+  background-color: $brand-two;
+  padding: 30px;
+  max-width: 500px;
+}

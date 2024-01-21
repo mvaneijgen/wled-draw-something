@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>WLED Draw Something</title>
+    <link rel="stylesheet" href="./assets/css/style.css" inline>
+  </head>
+  <body>
+    <div id="app">
+      <aside>
+        <div class="inner">
+          <div class="title">
+            <h1>{{ title }}</h1>
+            <h3>Version {{version}}</h3>
+          </div>
+          <div class="controls">
+            <div class="alloy-input-group">
+              <label for="color">Color</label>
+              <input type="color" id="color" name="head" v-model.lazy="color">
+            </div>
+
+            <div class="alloy-input-group">
+              <label for="pallete">Pallete hisotry</label>
+              <svg class="colorPallete" :view-box.camel="viewBoxPallete">
+                <g v-for="(item, yIndex) in yPallete">
+                  <rect v-for="(item, xIndex) in xPallete" :key="xIndex"
+                    :x="size * xIndex" :y="size * yIndex" :width="size"
+                    :height="size" stroke="#0c162d"
+                    :fill="fillPallete[xIndex + xPallete * yIndex]"
+                    @click="changeColor"
+                    :data-number="xIndex + xPallete*yIndex" />
+                </g>
+              </svg>
+            </div>
+            <div class="extra">
+              <button class="optionsToggle"
+                @click="options = !options">View
+                settings</button>
+              <ul v-if="options">
+                <li><strong>URL</strong> {{url}}</li>
+                <li><strong>Matrix width</strong> {{x}}</li>
+                <li><strong>Matrix height</strong> {{y}}</li>
+              </ul>
+              <div class="alloy-input-group" v-if="options">
+                <label for="timer">timer</label>
+                <input type="number" id="timer" v-model="timer">
+              </div>
+            </div>
+          </div>
+          <button @click="post">Send 🚀</button>
+          <button class="btn-alt" @click="clear">Clear ❌</button>
+
+          <a href="https://studioalloy.nl" id="logo">
+            <img src="https://studioalloy.nl/_nuxt/img/a293d3c.svg">
+            <div>
+              <span>Powered by</span>
+              <span>Studio Alloy</span>
+            </div>
+          </a>
+        </div>
+      </aside>
+      <div class="container" v-if="loading">
+        <div class="notice">
+          <h3>We're currently loading your settings. Make sure your matrix is
+            setup correclty. <i>Fetching {{url}}</i></h3>
+        </div>
+      </div>
+      <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
+        v-if="!loading">
+        <svg :view-box.camel="viewBox">
+          <g v-for="(item, yIndex) in y">
+            <rect v-for="(item, xIndex) in x" :key="xIndex" :x="size * xIndex"
+              :y="size * yIndex" :width="size" :height="size" stroke="#19233b"
+              :fill="fill[xIndex + x*yIndex]" @mousedown="setColor"
+              @mouseover="dragColor"
+              @contextmenu.prevent="rightClick"
+              :data-number="xIndex + x*yIndex" />
+          </g>
+        </svg>
+      </div>
+
+    </div>
+    <script src='https://unpkg.com/vue@3/dist/vue.global.js'></script>
+    <script src="./assets/js/script.js" inline></script>
+  </body>
+</html>
