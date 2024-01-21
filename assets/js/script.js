@@ -7,7 +7,6 @@ const App = {
       loading: true,
       title: "Draw something",
       version: "1.0",
-      url: "",
       url: "http://wled.local/json",
       size: 10,
       x: 1,
@@ -115,17 +114,15 @@ const App = {
     },
     // 🪣 fill color
     setColor: function (e) {
-      localStorage.fill = this.fill.toString();
       e.target.setAttribute("fill", this.color);
       this.fill[e.target.dataset.number] = this.color;
-      if (!this.isMouseDown) {
-        this.post()
-      }
+      localStorage.fill = this.fill.toString();
     },
     // 🖱️ Right click remove color
     rightClick: function (e) {
+      this.fill[e.target.dataset.number] = '#000000';
       e.target.setAttribute("fill", '#000000');
-      this.post();
+      localStorage.fill = this.fill.toString();
     },
     // END 🖌️ Paint controls --------------//
 
@@ -170,7 +167,9 @@ const App = {
           this.x = data.info.leds.matrix.w;
           this.y = data.info.leds.matrix.h;
           this.loading = false;
-          this.setupColors();
+          if (!localStorage.fill) {
+            this.setupColors();
+          }
         })
         .catch((error) => {
           console.error("Fetch Error:", error);
@@ -184,7 +183,6 @@ const App = {
     //--------------------------------//
     color: function (newColor) {
       // Update 🎨 pallete history
-      // TODO: Check if color is already in pallete then don't update
       if (!this.fillPallete.includes(this.color)) {
         this.fillPallete.pop();
         this.fillPallete.unshift(this.color);
@@ -198,19 +196,19 @@ const App = {
     // END 💾 Save everything to local storage --------------//
   },
   mounted() {
-    // * this.url = `${window.location.host}/json`;
-
+    // this.url = `${window.location.host}/json`;
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
     // if (localStorage.url) this.url = localStorage.url; // Enable
     if (localStorage.color) this.color = localStorage.color;
-    if (localStorage.fill) this.fill = localStorage.fill.split(",");;
+    if (localStorage.fill) this.fill = localStorage.fill.split(",");
     if (localStorage.fillPallete) this.fillPallete = localStorage.fillPallete.split(",");
     if (localStorage.timer) this.timer = localStorage.timer;
     // END 💾 Get everything from local storage  --------------//
   },
   created() {
+    // this.fill = [];
     this.get();
   }
 };
