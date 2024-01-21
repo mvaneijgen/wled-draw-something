@@ -1,12 +1,25 @@
 # WLED Draw Something
 Draw and send pixel art direcly to your WLED 2D Matrix 
 
+## Use the tool
+You can open the `drawsomething.html` file into any browser set the correct API endpoint, this looks like this `http://[device_ip_address]/json` or upload the `drawsomething.html` to your WLED environment, see below.
+
+## Install into your WLED environment
+Go to [releases](https://github.com/mvaneijgen/wled-draw-something/releases/) and download the latest released file `drawsomething.html`. Within your 
+
+### Steps
+1. Download the `drawsomething.html` from [releases](https://github.com/mvaneijgen/wled-draw-something/releases/) 
+1. Go to the URL `http://[device_ip_address]/edit`
+1. Upload the `drawsomething.html` file using the UI
+1. Go to `http://[device_ip_address]/drawsomething.html`
+
 ## About
 I've made this tool so I could send pixel art to my SO, just as a fun way to leave a digital note at a at a random time in the day.
 
 ## Road map
-[] Drag on mobile
-[] minify .html file
+- [x] Version 1 🎉
+- [ ] Drag on mobile
+- [ ] minify .html file
 
 ## Tools used
 This tool is build using Vue.js and there is some SCSS to easily write CSS

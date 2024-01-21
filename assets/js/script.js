@@ -7,7 +7,7 @@ const App = {
       loading: true,
       title: "Draw something",
       version: "1.0",
-      url: "http://wled.local/json",
+      url: "",
       size: 10,
       x: 1,
       y: 1,
@@ -151,7 +151,6 @@ const App = {
         });
     },
     get: function () {
-      console.warn(`Fetching ${this.url}`); // ! delete
       fetch(this.url, {
         method: "GET",
         mode: "cors",
@@ -172,12 +171,17 @@ const App = {
           }
         })
         .catch((error) => {
+          this.options = true;
           console.error("Fetch Error:", error);
         });
     }
     // END 🐵 Send API request --------------//
   },
   watch: {
+    url: function (newData) {
+      this.get();
+      localStorage.url = newData;
+    },
     //--------------------------------//
     // 💾 Save everything to local storage
     //--------------------------------//
@@ -196,7 +200,11 @@ const App = {
     // END 💾 Save everything to local storage --------------//
   },
   mounted() {
-    // this.url = `${window.location.host}/json`;
+    if (localStorage.url) {
+      this.url = localStorage.url;
+    } else {
+      this.url = `${window.location.host}/json`;
+    }
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
