@@ -603,6 +603,10 @@ button[disabled] {
               <button class="optionsToggle"
                 @click="options = !options">View
                 settings</button>
+              <div class="alloy-input-group" v-if="options">
+                <label for="url">url</label>
+                <input type="text" id="url" v-model="url">
+              </div>
               <ul v-if="options">
                 <li><strong>URL</strong> {{url}}</li>
                 <li><strong>Matrix width</strong> {{x}}</li>
@@ -630,6 +634,8 @@ button[disabled] {
         <div class="notice">
           <h3>We're currently loading your settings. Make sure your matrix is
             setup correclty. <i>Fetching {{url}}</i></h3>
+          <p>If you keep seeing this make sure you update your API endpoint
+            url eg <i>http://[device_ip_address]/json`</i></p>
         </div>
       </div>
       <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
@@ -657,7 +663,7 @@ const App = {
       loading: true,
       title: "Draw something",
       version: "1.0",
-      url: "http://wled.local/json",
+      url: "",
       size: 10,
       x: 1,
       y: 1,
@@ -801,7 +807,6 @@ const App = {
         });
     },
     get: function () {
-      console.warn(`Fetching ${this.url}`); // ! delete
       fetch(this.url, {
         method: "GET",
         mode: "cors",
@@ -822,12 +827,17 @@ const App = {
           }
         })
         .catch((error) => {
+          this.options = true;
           console.error("Fetch Error:", error);
         });
     }
     // END 🐵 Send API request --------------//
   },
   watch: {
+    url: function (newData) {
+      this.get();
+      localStorage.url = newData;
+    },
     //--------------------------------//
     // 💾 Save everything to local storage
     //--------------------------------//
@@ -846,7 +856,11 @@ const App = {
     // END 💾 Save everything to local storage --------------//
   },
   mounted() {
-    // this.url = `${window.location.host}/json`;
+    if (localStorage.url) {
+      this.url = localStorage.url;
+    } else {
+      this.url = `${window.location.host}/json`;
+    }
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
