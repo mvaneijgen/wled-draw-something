@@ -4,6 +4,8 @@ Draw and send pixel art direcly to your WLED 2D Matrix
 ## Use the tool
 You can open the `drawsomething.html` file into any browser set the correct API endpoint, this looks like this `http://[device_ip_address]/json` or upload the `drawsomething.html` to your WLED environment, see below.
 
+[![-AHuRUJW-0g](https://img.youtube.com/vi/-AHuRUJW-0g/0.jpg)](https://www.youtube.com/watch?v=-AHuRUJW-0g)
+
 ## Install into your WLED environment
 Go to [releases](https://github.com/mvaneijgen/wled-draw-something/releases/) and download the latest released file `drawsomething.html`. Within your 
 
