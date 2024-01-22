@@ -32,28 +32,53 @@
                 </g>
               </svg>
             </div>
-            <div class="extra">
-              <button class="optionsToggle"
-                @click="options = !options">View
+
+            <!-- <button @click="post">Send mannualy🚀</button> -->
+            <div class="alloy-input-group">
+              <label for>❌ Clear current drawing</label>
+              <p>Does not update light</p>
+              <button class @click="clear">Clear</button>
+            </div>
+
+            <div class="alloy-input-group">
+              <button class="btn-alt" @click="options = !options">Advanced
                 settings</button>
-              <div class="alloy-input-group" v-if="options">
-                <label for="url">url</label>
-                <input type="text" id="url" v-model="url">
+            </div>
+
+            <div class="alloy-input-group" v-if="options">
+              <label for="url">API url</label>
+              <input type="text" id="url" v-model="url">
+            </div>
+            <div class="alloy-input-flex" v-if="options">
+              <div class="alloy-input-group">
+                <label for="xAxis">Matrix W</label>
+                <input type="number" id="xAxis" v-model="x">
               </div>
-              <ul v-if="options">
-                <li><strong>URL</strong> {{url}}</li>
-                <li><strong>Matrix width</strong> {{x}}</li>
-                <li><strong>Matrix height</strong> {{y}}</li>
-              </ul>
               <div class="alloy-input-group" v-if="options">
-                <label for="timer">timer</label>
-                <input type="number" id="timer" v-model="timer">
+                <label for="yAxis">Matrix H</label>
+                <input type="number" id="yAxis" v-model="y">
               </div>
             </div>
-          </div>
-          <button @click="post">Send 🚀</button>
-          <button class="btn-alt" @click="clear">Clear ❌</button>
+            <!-- <ul class="description">
+                  <li><strong>URL</strong> {{url}}</li>
+                  <li><strong>Matrix width</strong> {{x}}</li>
+                  <li><strong>Matrix height</strong> {{y}}</li>
+                </ul> -->
 
+            <div class="alloy-input-group" v-if="options">
+              <label for="timer">Timer (nightlight)</label>
+              <p class="description">Set a nightlight timer to {{timer}}
+                mintues. If zero no timer
+                would be set</p>
+              <input type="number" id="timer" v-model="timer">
+            </div>
+            <div class="alloy-input-group" v-if="options">
+              <label for="copy">Preset</label>
+              <p class="description">Save preset manually</p>
+              <pre id="copy" ref="copy">{{json}}</pre>
+              <button @click="copy">Copy preset</button>
+            </div>
+          </div>
           <a href="https://studioalloy.nl" id="logo">
             <img src="https://studioalloy.nl/_nuxt/img/a293d3c.svg">
             <div>

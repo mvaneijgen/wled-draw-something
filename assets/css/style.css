@@ -236,15 +236,16 @@ html {
 body {
   background-color: #19233b;
   color: #fff;
+  touch-action: manipulation;
 }
 
 svg {
-  width: 80vmin;
+  height: 90%;
+  width: 90%;
   cursor: pointer;
 }
 @media screen and (min-width: 999px) {
   svg {
-    width: 50vmin;
     justify-content: space-between;
     align-items: center;
   }
@@ -269,6 +270,12 @@ label {
   display: block;
 }
 
+.alloy-input-flex {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .alloy-input-group {
   grid-column: 1/span 1;
   margin-bottom: 15px;
@@ -276,12 +283,9 @@ label {
 }
 .alloy-input-group label {
   display: block;
-  margin-bottom: 15px;
 }
-.alloy-input-group input {
-  width: 100%;
-  margin-bottom: 30px;
-  padding: 7.5px;
+.alloy-input-group p {
+  font-size: 0.8rem;
 }
 .alloy-input-group [type=color] {
   padding: 0;
@@ -298,6 +302,18 @@ label {
 }
 .alloy-input-group [type=color]::-webkit-color-swatch {
   border: none;
+}
+
+textarea {
+  font-size: 0.8rem;
+}
+
+textarea,
+input {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 7.5px;
 }
 
 select {
@@ -331,6 +347,10 @@ select {
   transform: scale(1.4);
 }
 
+.description {
+  font-size: 0.8rem;
+}
+
 select {
   padding: 10px 15px;
 }
@@ -354,6 +374,10 @@ ul li {
     flex-direction: row;
   }
 }
+#app > * {
+  overflow-y: auto;
+}
+
 .view {
   width: 100vw;
   display: flex;
@@ -370,7 +394,7 @@ aside {
 @media screen and (min-width: 999px) {
   aside {
     flex-shrink: 0;
-    flex-grow: 1;
+    flex-grow: 0;
     flex-basis: 300px;
   }
 }
@@ -389,7 +413,7 @@ aside > .inner {
 }
 @media screen and (min-width: 999px) {
   aside > .inner {
-    gap: 30px;
+    gap: 20px;
     overflow-y: auto;
     height: 100%;
   }
@@ -402,7 +426,6 @@ aside .controls {
 }
 @media screen and (max-width: 999px) {
   aside .controls {
-    justify-content: center;
     flex-direction: row;
     gap: 3%;
     flex-basis: 100%;
@@ -421,7 +444,7 @@ aside .optionsToggle {
   text-align: left;
 }
 aside .title {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 aside .title h1 {
   opacity: 0.7;
@@ -484,7 +507,6 @@ form {
 }
 .input label.description {
   display: inline;
-  font-weight: 40;
 }
 .input button {
   width: 49%;
@@ -542,7 +564,6 @@ button {
   font-weight: 700;
   border: 0;
   margin-bottom: 20px;
-  padding: 30px;
 }
 
 .btn-alt {
@@ -568,4 +589,13 @@ button[disabled] {
   background-color: #f53;
   padding: 30px;
   max-width: 500px;
+}
+
+pre {
+  overflow-x: auto;
+  background-color: #19233b;
+  padding: 10px;
+  font-size: 0.8rem;
+  max-width: 100%;
+  width: 240px;
 }/*# sourceMappingURL=style.css.map */

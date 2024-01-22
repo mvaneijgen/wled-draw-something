@@ -241,15 +241,16 @@ html {
 body {
   background-color: #19233b;
   color: #fff;
+  touch-action: manipulation;
 }
 
 svg {
-  width: 80vmin;
+  height: 90%;
+  width: 90%;
   cursor: pointer;
 }
 @media screen and (min-width: 999px) {
   svg {
-    width: 50vmin;
     justify-content: space-between;
     align-items: center;
   }
@@ -274,6 +275,12 @@ label {
   display: block;
 }
 
+.alloy-input-flex {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .alloy-input-group {
   grid-column: 1/span 1;
   margin-bottom: 15px;
@@ -281,12 +288,9 @@ label {
 }
 .alloy-input-group label {
   display: block;
-  margin-bottom: 15px;
 }
-.alloy-input-group input {
-  width: 100%;
-  margin-bottom: 30px;
-  padding: 7.5px;
+.alloy-input-group p {
+  font-size: 0.8rem;
 }
 .alloy-input-group [type=color] {
   padding: 0;
@@ -303,6 +307,18 @@ label {
 }
 .alloy-input-group [type=color]::-webkit-color-swatch {
   border: none;
+}
+
+textarea {
+  font-size: 0.8rem;
+}
+
+textarea,
+input {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 7.5px;
 }
 
 select {
@@ -336,6 +352,10 @@ select {
   transform: scale(1.4);
 }
 
+.description {
+  font-size: 0.8rem;
+}
+
 select {
   padding: 10px 15px;
 }
@@ -359,6 +379,10 @@ ul li {
     flex-direction: row;
   }
 }
+#app > * {
+  overflow-y: auto;
+}
+
 .view {
   width: 100vw;
   display: flex;
@@ -375,7 +399,7 @@ aside {
 @media screen and (min-width: 999px) {
   aside {
     flex-shrink: 0;
-    flex-grow: 1;
+    flex-grow: 0;
     flex-basis: 300px;
   }
 }
@@ -394,7 +418,7 @@ aside > .inner {
 }
 @media screen and (min-width: 999px) {
   aside > .inner {
-    gap: 30px;
+    gap: 20px;
     overflow-y: auto;
     height: 100%;
   }
@@ -407,7 +431,6 @@ aside .controls {
 }
 @media screen and (max-width: 999px) {
   aside .controls {
-    justify-content: center;
     flex-direction: row;
     gap: 3%;
     flex-basis: 100%;
@@ -426,7 +449,7 @@ aside .optionsToggle {
   text-align: left;
 }
 aside .title {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 aside .title h1 {
   opacity: 0.7;
@@ -489,7 +512,6 @@ form {
 }
 .input label.description {
   display: inline;
-  font-weight: 40;
 }
 .input button {
   width: 49%;
@@ -547,7 +569,6 @@ button {
   font-weight: 700;
   border: 0;
   margin-bottom: 20px;
-  padding: 30px;
 }
 
 .btn-alt {
@@ -573,6 +594,15 @@ button[disabled] {
   background-color: #f53;
   padding: 30px;
   max-width: 500px;
+}
+
+pre {
+  overflow-x: auto;
+  background-color: #19233b;
+  padding: 10px;
+  font-size: 0.8rem;
+  max-width: 100%;
+  width: 240px;
 }/*# sourceMappingURL=style.css.map */</style>
   </head>
   <body>
@@ -602,28 +632,53 @@ button[disabled] {
                 </g>
               </svg>
             </div>
-            <div class="extra">
-              <button class="optionsToggle"
-                @click="options = !options">View
+
+            <!-- <button @click="post">Send mannualy🚀</button> -->
+            <div class="alloy-input-group">
+              <label for>❌ Clear current drawing</label>
+              <p>Does not update light</p>
+              <button class @click="clear">Clear</button>
+            </div>
+
+            <div class="alloy-input-group">
+              <button class="btn-alt" @click="options = !options">Advanced
                 settings</button>
-              <div class="alloy-input-group" v-if="options">
-                <label for="url">url</label>
-                <input type="text" id="url" v-model="url">
+            </div>
+
+            <div class="alloy-input-group" v-if="options">
+              <label for="url">API url</label>
+              <input type="text" id="url" v-model="url">
+            </div>
+            <div class="alloy-input-flex" v-if="options">
+              <div class="alloy-input-group">
+                <label for="xAxis">Matrix W</label>
+                <input type="number" id="xAxis" v-model="x">
               </div>
-              <ul v-if="options">
-                <li><strong>URL</strong> {{url}}</li>
-                <li><strong>Matrix width</strong> {{x}}</li>
-                <li><strong>Matrix height</strong> {{y}}</li>
-              </ul>
               <div class="alloy-input-group" v-if="options">
-                <label for="timer">timer</label>
-                <input type="number" id="timer" v-model="timer">
+                <label for="yAxis">Matrix H</label>
+                <input type="number" id="yAxis" v-model="y">
               </div>
             </div>
-          </div>
-          <button @click="post">Send 🚀</button>
-          <button class="btn-alt" @click="clear">Clear ❌</button>
+            <!-- <ul class="description">
+                  <li><strong>URL</strong> {{url}}</li>
+                  <li><strong>Matrix width</strong> {{x}}</li>
+                  <li><strong>Matrix height</strong> {{y}}</li>
+                </ul> -->
 
+            <div class="alloy-input-group" v-if="options">
+              <label for="timer">Timer (nightlight)</label>
+              <p class="description">Set a nightlight timer to {{timer}}
+                mintues. If zero no timer
+                would be set</p>
+              <input type="number" id="timer" v-model="timer">
+            </div>
+            <div class="alloy-input-group" v-if="options">
+              <label for="copy">Preset</label>
+              <p class="description">Save preset manually</p>
+              <pre id="copy" ref="copy">{{json}}</pre>
+              <button @click="copy">Copy preset</button>
+            </div>
+          </div>
           <a href="https://studioalloy.nl" id="logo">
             <img src="https://studioalloy.nl/_nuxt/img/a293d3c.svg">
             <div>
@@ -665,7 +720,7 @@ const App = {
     return {
       loading: true,
       title: "Draw something",
-      version: "1.0",
+      version: "1.1",
       url: "",
       size: 10,
       x: 1,
@@ -720,14 +775,7 @@ const App = {
     // Create JSON body for POST
     //--------------------------------//
     json: function () {
-      return `{
-   "on": true,
-   "bri": 128, ${this.setTimer}
-   "v": true,
-   "seg": {
-      "i":[${this.seg}]
-   }
-}`;
+      return `{"on": true,"bri": 128,${this.setTimer} "v": true, "seg": {"i":[${this.seg}]}}`;
     }
     // END Create JSON body for POST --------------//
   },
@@ -830,12 +878,26 @@ const App = {
           this.options = true;
           console.error("Fetch Error:", error);
         });
-    }
+    },
     // END 🐵 Send API request --------------//
+    copy() {
+      const copyText = this.$refs.copy.value;
+      navigator.clipboard.writeText(copyText).then(function () {
+        console.log("Text copied to clipboard: " + copyText);
+      }, function (err) {
+        console.error("Failed to copy text: ", err);
+      });
+    }
   },
   watch: {
     url: function (newData) {
       this.get();
+    },
+    x: function (newData) {
+      this.loading = false;
+    },
+    y: function (newData) {
+      this.loading = false;
     },
     //--------------------------------//
     // 💾 Save everything to local storage

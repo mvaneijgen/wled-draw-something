@@ -8,7 +8,6 @@ $brand-two: #f53;
 $brand-light: #fff;
 $brand-dark: #0c162d;
 $brand-dark-light: #19233b;
-
 $brake-point: 999px;
 
 body,
@@ -18,24 +17,23 @@ html {
   @media screen and (max-width: $brake-point) {
     font-size: 24px;
   }
-
-
 }
 
 body {
   background-color: $brand-dark-light;
   color: #fff;
+  touch-action: manipulation;
 }
 
 svg {
-  width: 80vmin;
+  height: 90%;
+  width: 90%;
   cursor: pointer;
 
   @media screen and (min-width: $brake-point) {
-    width: 50vmin;
+    // width: 60vmin;
     justify-content: space-between;
     align-items: center;
-
   }
 }
 
@@ -59,21 +57,26 @@ label {
   display: block;
 }
 
+.alloy-input-flex {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
 .alloy-input-group {
   grid-column: 1 / span 1;
   // padding: $base-margin;
   margin-bottom: $base-margin;
   width: 100%;
 
+
   label {
     display: block;
-    margin-bottom: $base-margin;
+    // margin-bottom: $base-margin;
   }
 
-  input {
-    width: 100%;
-    margin-bottom: $base-margin * 2;
-    padding: $base-margin/2;
+  p {
+    font-size: 0.8rem;
   }
 
   [type="color"] {
@@ -94,6 +97,18 @@ label {
       border: none;
     }
   }
+}
+
+textarea {
+  font-size: 0.8rem;
+}
+
+textarea,
+input {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: $base-margin/2;
 }
 
 select {
@@ -130,6 +145,11 @@ select {
   }
 }
 
+.description {
+  // font-weight: 40;
+  font-size: 0.8rem;
+}
+
 select {
   padding: 10px 15px;
 }
@@ -154,7 +174,7 @@ ul {
   }
 
   >* {
-    // overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
@@ -173,7 +193,7 @@ aside {
 
   @media screen and (min-width: $brake-point) {
     flex-shrink: 0;
-    flex-grow: 1;
+    flex-grow: 0;
     flex-basis: 300px;
   }
 
@@ -191,7 +211,7 @@ aside {
     }
 
     @media screen and (min-width: $brake-point) {
-      gap: 30px;
+      gap: 20px;
       overflow-y: auto;
       height: 100%;
     }
@@ -201,12 +221,11 @@ aside {
     position: relative;
     display: flex;
     flex-direction: column;
-
     flex-flow: row wrap;
 
 
     @media screen and (max-width: $brake-point) {
-      justify-content: center;
+      // justify-content: center;
       flex-direction: row;
       gap: 3%;
       flex-basis: 100%;
@@ -230,7 +249,7 @@ aside {
   }
 
   .title {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 
     // @media screen and (max-width: $brake-point) {
     //   order: 10;
@@ -312,7 +331,6 @@ form {
 
     &.description {
       display: inline;
-      font-weight: 40;
     }
   }
 
@@ -378,7 +396,7 @@ button {
   font-weight: 700;
   border: 0;
   margin-bottom: 20px;
-  padding: 30px;
+  // padding: 30px;
 }
 
 .btn-alt {
@@ -404,4 +422,14 @@ button[disabled] {
   background-color: $brand-two;
   padding: 30px;
   max-width: 500px;
+}
+
+pre {
+  overflow-x: auto;
+  // max-width: 300px;
+  background-color: $brand-dark-light;
+  padding: 10px;
+  font-size: 0.8rem;
+  max-width: 100%;
+  width: 240px;
 }

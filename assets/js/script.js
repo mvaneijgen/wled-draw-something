@@ -6,7 +6,7 @@ const App = {
     return {
       loading: true,
       title: "Draw something",
-      version: "1.0",
+      version: "1.1",
       url: "",
       size: 10,
       x: 1,
@@ -61,14 +61,7 @@ const App = {
     // Create JSON body for POST
     //--------------------------------//
     json: function () {
-      return `{
-   "on": true,
-   "bri": 128, ${this.setTimer}
-   "v": true,
-   "seg": {
-      "i":[${this.seg}]
-   }
-}`;
+      return `{"on": true,"bri": 128,${this.setTimer} "v": true, "seg": {"i":[${this.seg}]}}`;
     }
     // END Create JSON body for POST --------------//
   },
@@ -171,12 +164,26 @@ const App = {
           this.options = true;
           console.error("Fetch Error:", error);
         });
-    }
+    },
     // END 🐵 Send API request --------------//
+    copy() {
+      const copyText = this.$refs.copy.value;
+      navigator.clipboard.writeText(copyText).then(function () {
+        console.log("Text copied to clipboard: " + copyText);
+      }, function (err) {
+        console.error("Failed to copy text: ", err);
+      });
+    }
   },
   watch: {
     url: function (newData) {
       this.get();
+    },
+    x: function (newData) {
+      this.loading = false;
+    },
+    y: function (newData) {
+      this.loading = false;
     },
     //--------------------------------//
     // 💾 Save everything to local storage
