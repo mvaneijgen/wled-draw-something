@@ -167,7 +167,7 @@ const App = {
     },
     // END 🐵 Send API request --------------//
     copy() {
-      const copyText = this.$refs.copy.value;
+      const copyText = this.$refs.copy.innerText;
       navigator.clipboard.writeText(copyText).then(function () {
         console.log("Text copied to clipboard: " + copyText);
       }, function (err) {
