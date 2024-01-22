@@ -76,7 +76,11 @@
               <label for="copy">Preset</label>
               <p class="description">Save preset manually</p>
               <pre id="copy" ref="copy">{{json}}</pre>
-              <button @click="copy">Copy preset</button>
+              <button @click="copy"><span v-if="!copied">Copy preset</span>
+                <span
+                  v-if="copied">Copied!</span> </button>
+              <p v-if="copiedFailed">Failed to copy text, try copying
+                manually.</p>
             </div>
           </div>
           <a href="https://studioalloy.nl" id="logo">

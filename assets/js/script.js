@@ -6,7 +6,7 @@ const App = {
     return {
       loading: true,
       title: "Draw something",
-      version: "1.1",
+      version: "1.2",
       url: "",
       size: 10,
       x: 1,
@@ -29,6 +29,8 @@ const App = {
         "#000000"
       ],
       options: false,
+      copied: false,
+      copiedFailed: false,
     };
   },
   computed: {
@@ -168,9 +170,10 @@ const App = {
     // END 🐵 Send API request --------------//
     copy() {
       const copyText = this.$refs.copy.innerText;
-      navigator.clipboard.writeText(copyText).then(function () {
-        console.log("Text copied to clipboard: " + copyText);
+      navigator.clipboard.writeText(copyText).then(() => {
+        this.copied = true;
       }, function (err) {
+        this.copiedFailed = true;
         console.error("Failed to copy text: ", err);
       });
     }
