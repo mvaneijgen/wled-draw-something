@@ -11,14 +11,24 @@ $brand-dark-light: #19233b;
 
 $brake-point: 999px;
 
-/*# sourceMappingURL=normalize.min.css.map */
+body,
+html {
+  font-size: 18px;
+
+  @media screen and (max-width: $brake-point) {
+    font-size: 24px;
+  }
+
+
+}
+
 body {
   background-color: $brand-dark-light;
   color: #fff;
 }
 
 svg {
-  width: 95vmin;
+  width: 80vmin;
   cursor: pointer;
 
   @media screen and (min-width: $brake-point) {
@@ -44,7 +54,7 @@ h4 {
 
 label {
   font-weight: 700;
-  font-size: 18px;
+  // font-size: 18px;
   margin-bottom: 10px;
   display: block;
 }
@@ -69,7 +79,20 @@ label {
   [type="color"] {
     padding: 0;
     appearance: none;
+    -webkit-appearance: none;
     border: 0;
+    border: none;
+    // width: 40px;
+    height: 40px;
+    border-radius: 0;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 3px;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+    }
   }
 }
 
@@ -122,7 +145,6 @@ ul {
 }
 
 #app {
-  font-size: 18px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -132,7 +154,7 @@ ul {
   }
 
   >* {
-    overflow-y: scroll;
+    // overflow-y: scroll;
   }
 }
 
@@ -157,8 +179,7 @@ aside {
 
   >.inner {
     height: 100%;
-    overflow-y: auto;
-    height: 100%;
+
     display: flex;
     flex-direction: row;
     padding: 30px;
@@ -171,6 +192,8 @@ aside {
 
     @media screen and (min-width: $brake-point) {
       gap: 30px;
+      overflow-y: auto;
+      height: 100%;
     }
   }
 
@@ -180,6 +203,7 @@ aside {
     flex-direction: column;
 
     flex-flow: row wrap;
+
 
     @media screen and (max-width: $brake-point) {
       justify-content: center;
@@ -214,14 +238,14 @@ aside {
 
     h1 {
       opacity: 0.7;
-      font-size: 30px;
+      font-size: 1.7rem;
       // line-height: 0.8em;
     }
 
     h3 {
+      font-size: 0.8rem;
       text-transform: uppercase;
-      font-size: 14px;
-      letter-spacing: 2px;
+      // font-size: 14px;
       font-weight: normal;
       transform: translatex(2px) translatey(-5px);
     }
@@ -263,11 +287,11 @@ aside {
 
     span {
       display: block;
-      font-size: 12px;
+      font-size: 1rem;
 
       &:last-of-type {
         font-weight: 700;
-        font-size: 20px;
+        font-size: 1.4rem;
       }
     }
   }
@@ -366,16 +390,6 @@ button {
 button[disabled] {
   background-color: #ccc;
   color: #666;
-}
-
-#copyFunctionContent {
-  height: 0;
-  overflow: hidden;
-
-  >* {
-    height: 0;
-    overflow: hidden;
-  }
 }
 
 .container {

@@ -15,12 +15,12 @@
           </div>
           <div class="controls">
             <div class="alloy-input-group">
-              <label for="color">Color</label>
+              <label for="color">Current Color</label>
               <input type="color" id="color" name="head" v-model.lazy="color">
             </div>
 
             <div class="alloy-input-group">
-              <label for="pallete">Pallete hisotry</label>
+              <label for="pallete">Pallete history</label>
               <svg class="colorPallete" :view-box.camel="viewBoxPallete">
                 <g v-for="(item, yIndex) in yPallete">
                   <rect v-for="(item, xIndex) in xPallete" :key="xIndex"

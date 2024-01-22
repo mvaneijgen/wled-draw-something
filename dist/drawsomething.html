@@ -227,6 +227,16 @@ template {
   display: none;
 }
 
+body,
+html {
+  font-size: 18px;
+}
+@media screen and (max-width: 999px) {
+  body,
+  html {
+    font-size: 24px;
+  }
+}
 
 body {
   background-color: #19233b;
@@ -234,7 +244,7 @@ body {
 }
 
 svg {
-  width: 95vmin;
+  width: 80vmin;
   cursor: pointer;
 }
 @media screen and (min-width: 999px) {
@@ -260,7 +270,6 @@ h4 {
 
 label {
   font-weight: 700;
-  font-size: 18px;
   margin-bottom: 10px;
   display: block;
 }
@@ -281,10 +290,19 @@ label {
 }
 .alloy-input-group [type=color] {
   padding: 0;
+  -moz-appearance: none;
+       appearance: none;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
   border: 0;
+  border: none;
+  height: 40px;
+  border-radius: 0;
+}
+.alloy-input-group [type=color]::-webkit-color-swatch-wrapper {
+  padding: 3px;
+}
+.alloy-input-group [type=color]::-webkit-color-swatch {
+  border: none;
 }
 
 select {
@@ -332,7 +350,6 @@ ul li {
 }
 
 #app {
-  font-size: 18px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -342,10 +359,6 @@ ul li {
     flex-direction: row;
   }
 }
-#app > * {
-  overflow-y: scroll;
-}
-
 .view {
   width: 100vw;
   display: flex;
@@ -368,8 +381,6 @@ aside {
 }
 aside > .inner {
   height: 100%;
-  overflow-y: auto;
-  height: 100%;
   display: flex;
   flex-direction: row;
   padding: 30px;
@@ -384,6 +395,8 @@ aside > .inner {
 @media screen and (min-width: 999px) {
   aside > .inner {
     gap: 30px;
+    overflow-y: auto;
+    height: 100%;
   }
 }
 aside .controls {
@@ -417,12 +430,11 @@ aside .title {
 }
 aside .title h1 {
   opacity: 0.7;
-  font-size: 30px;
+  font-size: 1.7rem;
 }
 aside .title h3 {
+  font-size: 0.8rem;
   text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 2px;
   font-weight: normal;
   transform: translatex(2px) translatey(-5px);
 }
@@ -455,11 +467,11 @@ aside #logo img {
 }
 aside #logo span {
   display: block;
-  font-size: 12px;
+  font-size: 1rem;
 }
 aside #logo span:last-of-type {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.4rem;
 }
 
 form {
@@ -549,15 +561,6 @@ button[disabled] {
   color: #666;
 }
 
-#copyFunctionContent {
-  height: 0;
-  overflow: hidden;
-}
-#copyFunctionContent > * {
-  height: 0;
-  overflow: hidden;
-}
-
 .container {
   width: 100%;
   height: 100%;
@@ -582,12 +585,12 @@ button[disabled] {
           </div>
           <div class="controls">
             <div class="alloy-input-group">
-              <label for="color">Color</label>
+              <label for="color">Current Color</label>
               <input type="color" id="color" name="head" v-model.lazy="color">
             </div>
 
             <div class="alloy-input-group">
-              <label for="pallete">Pallete hisotry</label>
+              <label for="pallete">Pallete history</label>
               <svg class="colorPallete" :view-box.camel="viewBoxPallete">
                 <g v-for="(item, yIndex) in yPallete">
                   <rect v-for="(item, xIndex) in xPallete" :key="xIndex"

@@ -17,7 +17,7 @@ Go to [releases](https://github.com/mvaneijgen/wled-draw-something/releases/) an
 I've made this tool so I could send pixel art to my SO, just as a fun way to leave a digital note at a at a random time in the day.
 
 ## Road map
-- [x] Version 1 🎉
+- [x] ~~Version 1~~ 🎉
 - [ ] Drag on mobile
 - [ ] minify .html file
 - [ ] Setup proper JSON object
