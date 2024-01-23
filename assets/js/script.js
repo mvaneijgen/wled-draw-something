@@ -6,7 +6,7 @@ const App = {
     return {
       // App info
       title: "Draw something",
-      version: "Alpha 1.2",
+      version: "Beta 1.2",
       // WLED JSON
       url: "",
       size: 10,
