@@ -238,8 +238,10 @@ const App = {
     // END 💾 Save everything to local storage --------------//
   },
   mounted() {
-    this.url = `http://${window.location.host}/json`;
-    if (thid.url === 'mvaneijgen.nl') {
+    const host = window.location.host;
+    console.warn(host);
+    this.url = `http://${host}/json`;
+    if (host === 'mvaneijgen.nl') {
       this.ignoreNotice();
     }
     //--------------------------------//
