@@ -458,6 +458,11 @@ aside .optionsToggle {
 aside .title {
   margin-bottom: 10px;
 }
+@media screen and (max-width: 999px) {
+  aside .title {
+    order: -1;
+  }
+}
 aside .title h1 {
   opacity: 0.7;
   font-size: 1.7rem;
@@ -475,11 +480,12 @@ aside .title h3 {
 @media screen and (max-width: 999px) {
   aside .title,
   aside #logo {
-    order: 10;
+    order: -1;
     flex-basis: 50%;
   }
 }
 aside #logo {
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -651,7 +657,7 @@ pre {
           <div class="title">
             <h1>{{ title }}</h1>
             <h3>Version {{version}}</h3>
-            <p v-if="demo" class="description">Demo mode is activated. For the best use of this tool install it in to your WLED controller, see <a href="https://github.com/mvaneijgen/wled-draw-something#use-the-tool">install guide!</a></p>
+            <p v-if="demo" class="description">Demo mode is activated. For the best use of this tool install it in to your WLED controller, see <a href="https://github.com/mvaneijgen/wled-draw-something#use-the-tool">install guide on Github!</a></p>
           </div>
           <!-- 🎛️ Controls -->
           <div class="controls">
@@ -677,12 +683,11 @@ pre {
             <!-- <button @click="post">Send mannualy🚀</button> -->
             <div class="alloy-input-group">
               <button class @click="clear">Clear screen</button>
+              <button class="btn-alt"
+                @click="options = !options">Advanced settings</button>
             </div>
 
             <!-- Advanced settings -->
-            <div class="alloy-input-group">
-              <button class="btn-alt" @click="options = !options">Advanced settings</button>
-            </div>
             <div class="alloy-input-group" v-if="options">
               <label for="url">API url</label>
               <p v-if="demo">You can't use the API on the demo page</p>
@@ -771,7 +776,7 @@ const App = {
     return {
       // App info
       title: "Draw something",
-      version: "Beta 1.2",
+      version: "beta 1.2",
       // WLED JSON
       url: "",
       size: 10,
@@ -800,7 +805,7 @@ const App = {
       loading: true,
       options: false,
       ignore: false,
-      demo: false,
+      demo: true,
     };
   },
   computed: {
@@ -947,13 +952,36 @@ const App = {
     // Copy preset 
     //--------------------------------//
     copy: function () {
-      const copyText = this.$refs.copy.innerText;
-      navigator.clipboard.writeText(copyText).then(() => {
-        this.copied = true;
-      }, function (err) {
-        this.copiedFailed = true;
-        console.error("Failed to copy text: ", err);
-      });
+
+      if (location.protocol !== 'https:') {
+        const element = this.$refs.copy;
+        const textToCopy = element.innerText;
+
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+          document.execCommand('copy');
+          this.copied = true;
+          console.log('Text copied to clipboard');
+        } catch (err) {
+          this.copiedFailed = true;
+          console.error('Unable to copy text to clipboard', err);
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      } else {
+        const copyText = this.$refs.copy.innerText;
+        console.warn(navigator);
+        navigator.clipboard.writeText(copyText).then(() => {
+          this.copied = true;
+        }, function (err) {
+          this.copiedFailed = true;
+          console.error("Failed to copy text: ", err);
+        });
+      }
     },
     // END Copy preset --------------//
     ignoreNotice: function () {

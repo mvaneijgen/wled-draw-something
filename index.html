@@ -37,7 +37,7 @@
           <div class="title">
             <h1>{{ title }}</h1>
             <h3>Version {{version}}</h3>
-            <p v-if="demo" class="description">Demo mode is activated. For the best use of this tool install it in to your WLED controller, see <a href="https://github.com/mvaneijgen/wled-draw-something#use-the-tool">install guide!</a></p>
+            <p v-if="demo" class="description">Demo mode is activated. For the best use of this tool install it in to your WLED controller, see <a href="https://github.com/mvaneijgen/wled-draw-something#use-the-tool">install guide on Github!</a></p>
           </div>
           <!-- 🎛️ Controls -->
           <div class="controls">
@@ -63,12 +63,11 @@
             <!-- <button @click="post">Send mannualy🚀</button> -->
             <div class="alloy-input-group">
               <button class @click="clear">Clear screen</button>
+              <button class="btn-alt"
+                @click="options = !options">Advanced settings</button>
             </div>
 
             <!-- Advanced settings -->
-            <div class="alloy-input-group">
-              <button class="btn-alt" @click="options = !options">Advanced settings</button>
-            </div>
             <div class="alloy-input-group" v-if="options">
               <label for="url">API url</label>
               <p v-if="demo">You can't use the API on the demo page</p>

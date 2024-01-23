@@ -453,6 +453,11 @@ aside .optionsToggle {
 aside .title {
   margin-bottom: 10px;
 }
+@media screen and (max-width: 999px) {
+  aside .title {
+    order: -1;
+  }
+}
 aside .title h1 {
   opacity: 0.7;
   font-size: 1.7rem;
@@ -470,11 +475,12 @@ aside .title h3 {
 @media screen and (max-width: 999px) {
   aside .title,
   aside #logo {
-    order: 10;
+    order: -1;
     flex-basis: 50%;
   }
 }
 aside #logo {
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;

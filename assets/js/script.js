@@ -6,7 +6,7 @@ const App = {
     return {
       // App info
       title: "Draw something",
-      version: "1.2",
+      version: "beta 1.2",
       // WLED JSON
       url: "",
       size: 10,
@@ -35,7 +35,7 @@ const App = {
       loading: true,
       options: false,
       ignore: false,
-      demo: false,
+      demo: true,
     };
   },
   computed: {
@@ -182,13 +182,36 @@ const App = {
     // Copy preset 
     //--------------------------------//
     copy: function () {
-      const copyText = this.$refs.copy.innerText;
-      navigator.clipboard.writeText(copyText).then(() => {
-        this.copied = true;
-      }, function (err) {
-        this.copiedFailed = true;
-        console.error("Failed to copy text: ", err);
-      });
+
+      if (location.protocol !== 'https:') {
+        const element = this.$refs.copy;
+        const textToCopy = element.innerText;
+
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+          document.execCommand('copy');
+          this.copied = true;
+          console.log('Text copied to clipboard');
+        } catch (err) {
+          this.copiedFailed = true;
+          console.error('Unable to copy text to clipboard', err);
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      } else {
+        const copyText = this.$refs.copy.innerText;
+        console.warn(navigator);
+        navigator.clipboard.writeText(copyText).then(() => {
+          this.copied = true;
+        }, function (err) {
+          this.copiedFailed = true;
+          console.error("Failed to copy text: ", err);
+        });
+      }
     },
     // END Copy preset --------------//
     ignoreNotice: function () {
