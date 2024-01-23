@@ -35,6 +35,7 @@ const App = {
       loading: true,
       options: false,
       ignore: false,
+      demo: false,
     };
   },
   computed: {
@@ -243,6 +244,7 @@ const App = {
     this.url = `http://${host}/json`;
     if (host === 'mvaneijgen.nl') {
       this.ignoreNotice();
+      this.demo = true;
     }
     //--------------------------------//
     // 💾 Get everything from local storage

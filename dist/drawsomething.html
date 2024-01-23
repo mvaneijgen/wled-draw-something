@@ -653,7 +653,8 @@ pre {
             </div>
             <div class="alloy-input-group" v-if="options">
               <label for="url">API url</label>
-              <input type="text" id="url" v-model="url">
+              <p v-if="demo">You can't use the API on the demo page</p>
+              <input type="text" id="url" v-model="url" :disabled="demo ? '' : disabled">
             </div>
             <div class="alloy-input-flex" v-if="options">
               <div class="alloy-input-group">
@@ -737,7 +738,7 @@ const App = {
     return {
       // App info
       title: "Draw something",
-      version: "Beta 1.2",
+      version: "Alpha 1.2",
       // WLED JSON
       url: "",
       size: 10,
@@ -766,6 +767,7 @@ const App = {
       loading: true,
       options: false,
       ignore: false,
+      demo: false,
     };
   },
   computed: {
@@ -974,6 +976,7 @@ const App = {
     this.url = `http://${host}/json`;
     if (host === 'mvaneijgen.nl') {
       this.ignoreNotice();
+      this.demo = true;
     }
     //--------------------------------//
     // 💾 Get everything from local storage
