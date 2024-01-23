@@ -737,7 +737,7 @@ const App = {
     return {
       // App info
       title: "Draw something",
-      version: "1.2",
+      version: "beta 1.2",
       // WLED JSON
       url: "",
       size: 10,
@@ -986,6 +986,10 @@ const App = {
     // END 💾 Get everything from local storage  --------------//
     this.mapUrlParameters()
   },
+  // created() {
+  //   const host = window.location.host;
+
+  // }
 };
 
 createApp(App).mount("#app");
