@@ -238,6 +238,10 @@ html {
   }
 }
 
+a {
+  color: #f53;
+}
+
 body {
   background-color: #19233b;
   color: #fff;
@@ -647,6 +651,7 @@ pre {
           <div class="title">
             <h1>{{ title }}</h1>
             <h3>Version {{version}}</h3>
+            <p v-if="demo" class="description">Demo mode is activated. For the best use of this tool install it in to your WLED controller, see <a href="https://github.com/mvaneijgen/wled-draw-something#use-the-tool">install guide!</a></p>
           </div>
           <!-- 🎛️ Controls -->
           <div class="controls">

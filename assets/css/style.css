@@ -233,6 +233,10 @@ html {
   }
 }
 
+a {
+  color: #f53;
+}
+
 body {
   background-color: #19233b;
   color: #fff;
