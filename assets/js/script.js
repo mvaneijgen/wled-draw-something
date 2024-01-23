@@ -241,9 +241,6 @@ const App = {
   mounted() {
     const host = window.location.host;
     this.url = `http://${host}/json`;
-    if (host === 'mvaneijgen.nl') {
-      this.ignoreNotice();
-    }
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
@@ -255,6 +252,12 @@ const App = {
     // END 💾 Get everything from local storage  --------------//
     this.mapUrlParameters()
   },
+  created() {
+    const host = window.location.host;
+    if (host === 'mvaneijgen.nl') {
+      this.ignoreNotice();
+    }
+  }
 };
 
 createApp(App).mount("#app");
