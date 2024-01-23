@@ -1,5 +1,8 @@
 # WLED Draw Something
-Draw and send pixel art direcly to your WLED 2D Matrix 
+Draw and send pixel art direcly to your WLED 2D Matrix.
+
+## [Try the demo](https://mvaneijgen.nl/wled-draw-something/) 🚀
+Note: the demo page can't access your API due to HTTPS Mixed Content
 
 [![-AHuRUJW-0g](https://img.youtube.com/vi/-AHuRUJW-0g/0.jpg)](https://www.youtube.com/watch?v=-AHuRUJW-0g)
 
