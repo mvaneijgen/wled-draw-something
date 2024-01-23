@@ -384,6 +384,9 @@ ul li {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 aside {

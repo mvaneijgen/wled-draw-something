@@ -389,6 +389,9 @@ ul li {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 aside {
@@ -611,6 +614,14 @@ pre {
   max-width: 100%;
   width: 240px;
 }/*# sourceMappingURL=style.css.map */</style>
+
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+<link rel="manifest" href="./assets/favicon/site.webmanifest">
+<link rel="mask-icon" href="./assets/favicon/safari-pinned-tab.svg" color="#0094ff">
+<meta name="msapplication-TileColor" content="#0094ff">
+<meta name="theme-color" content="#0094ff">
   </head>
   <body>
     <div id="app">
@@ -644,7 +655,7 @@ pre {
 
             <!-- <button @click="post">Send mannualy🚀</button> -->
             <div class="alloy-input-group">
-              <button class @click="clear">Clear sreen</button>
+              <button class @click="clear">Clear screen</button>
             </div>
 
             <!-- Advanced settings -->
@@ -716,6 +727,7 @@ pre {
       </div>
       <!-- END Notifications -->
       <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
+      @touchstart="mouseDown" @mouseup="touchend"
         v-if="!loading">
         <svg :view-box.camel="viewBox">
           <g v-for="(item, yIndex) in y">
