@@ -569,6 +569,13 @@ button {
   font-weight: 700;
   border: 0;
   margin-bottom: 20px;
+  transition: transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+button:hover {
+  background-color: #0ba;
+  color: #0c162d;
 }
 
 .btn-alt {
@@ -607,12 +614,14 @@ pre {
   </head>
   <body>
     <div id="app">
+      <!-- Sidebar -->
       <aside>
         <div class="inner">
           <div class="title">
             <h1>{{ title }}</h1>
             <h3>Version {{version}}</h3>
           </div>
+          <!-- 🎛️ Controls -->
           <div class="controls">
             <div class="alloy-input-group">
               <label for="color">Current Color</label>
@@ -635,16 +644,13 @@ pre {
 
             <!-- <button @click="post">Send mannualy🚀</button> -->
             <div class="alloy-input-group">
-              <label for>❌ Clear current drawing</label>
-              <p>Does not update light</p>
-              <button class @click="clear">Clear</button>
+              <button class @click="clear">Clear sreen</button>
             </div>
 
+            <!-- Advanced settings -->
             <div class="alloy-input-group">
-              <button class="btn-alt" @click="options = !options">Advanced
-                settings</button>
+              <button class="btn-alt" @click="options = !options">Advanced settings</button>
             </div>
-
             <div class="alloy-input-group" v-if="options">
               <label for="url">API url</label>
               <input type="text" id="url" v-model="url">
@@ -652,38 +658,37 @@ pre {
             <div class="alloy-input-flex" v-if="options">
               <div class="alloy-input-group">
                 <label for="xAxis">Matrix W</label>
-                <input type="number" id="xAxis" v-model="x">
+                <input type="number" id="xAxis" v-model="x" pattern="[0-9]*" inputmode="numeric">
               </div>
               <div class="alloy-input-group" v-if="options">
                 <label for="yAxis">Matrix H</label>
-                <input type="number" id="yAxis" v-model="y">
+                <input type="number" id="yAxis" v-model="y" pattern="[0-9]*" inputmode="numeric">
               </div>
             </div>
-            <!-- <ul class="description">
-                  <li><strong>URL</strong> {{url}}</li>
-                  <li><strong>Matrix width</strong> {{x}}</li>
-                  <li><strong>Matrix height</strong> {{y}}</li>
-                </ul> -->
-
             <div class="alloy-input-group" v-if="options">
               <label for="timer">Timer (nightlight)</label>
-              <p class="description">Set a nightlight timer to {{timer}}
-                mintues. If zero no timer
-                would be set</p>
-              <input type="number" id="timer" v-model="timer">
+              <p class="description">Set a nightlight timer to {{timer}} mintues. If zero no timer would be set</p>
+              <input type="number" id="timer" v-model="timer" pattern="[0-9]*" inputmode="numeric">
             </div>
             <div class="alloy-input-group" v-if="options">
-              <label for="copy">Preset</label>
-              <p class="description">Save preset manually</p>
+              <label for="copy">Save preset manually</label>
               <pre id="copy" ref="copy">{{json}}</pre>
-              <button @click="copy"><span v-if="!copied">Copy preset</span>
-                <span
-                  v-if="copied">Copied!</span> </button>
-
-              <p v-if="copiedFailed">Failed to copy text, try copying manually
-                {{copiedFailed}}</p>
+              <p v-if="copiedFailed">Failed to copy text, try copying manually.</p>
+              <button @click="copy" ><span v-if="!copied">Copy preset</span><span v-if="copied">Copied!</span> </button>
             </div>
+            <div class="alloy-input-group" v-if="options">
+              <label for>Things known about your matrix</label>
+              <ul class="description">
+                <li><strong>URL</strong> {{url}}</li>
+                <li><strong>Matrix width</strong> {{x}}</li>
+                <li><strong>Matrix height</strong> {{y}}</li>
+                <li><strong>Matrix led</strong> {{y * x}}</li>
+                <li><strong>Pixel art amount</strong> {{fill.length}}</li>
+              </ul>
+            </div>
+            <!-- Advanced settings -->
           </div>
+          <!-- 🎛️ END Controls -->
           <a href="https://studioalloy.nl" id="logo">
             <img src="https://studioalloy.nl/_nuxt/img/a293d3c.svg">
             <div>
@@ -693,14 +698,22 @@ pre {
           </a>
         </div>
       </aside>
+      <!-- END Sidebar -->
+      <!-- Notifications -->
       <div class="container" v-if="loading">
-        <div class="notice">
-          <h3>We're currently loading your settings. Make sure your matrix is
-            setup correclty. <i>Fetching {{url}}</i></h3>
-          <p>If you keep seeing this make sure you update your API endpoint
-            url eg <i>http://[device_ip_address]/json`</i></p>
+        <div class="notice" v-if="!options">
+          <h3>We're currently loading your settings. Make sure your matrix is setup correclty. <i>Fetching {{url}}</i></h3>
+          <p>If you keep seeing this make sure you update your API endpoint url eg <i>`http://[device_ip_address]/json`</i></p>
+        </div>
+
+        <div class="notice error" v-if="options">
+          <h3>We could not fetch your settings at <i>{{url}}</i></h3>
+          <p>You can change the url manually <input type="text" v-model="url"></p>
+          <p>Or just use the tool without the API connected</p>
+          <button class="btn-alt" @click="ignoreNotice">Just use the tool</button>
         </div>
       </div>
+      <!-- END Notifications -->
       <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
         v-if="!loading">
         <svg :view-box.camel="viewBox">
@@ -714,7 +727,6 @@ pre {
           </g>
         </svg>
       </div>
-
     </div>
     <script src='https://unpkg.com/vue@3/dist/vue.global.js'></script>
     <script>console.clear();
@@ -723,21 +735,22 @@ const { createApp } = Vue;
 const App = {
   data() {
     return {
-      loading: true,
+      // App info
       title: "Draw something",
-      version: "1.1",
+      version: "1.2",
+      // WLED JSON
       url: "",
       size: 10,
       x: 1,
       y: 1,
-      xPallete: 4,
-      yPallete: 2,
       timer: 0,
+      fill: [],
+      // 🎛️ Controls
       color: "#ff2500",
       isMouseDown: false,
-      fill: [],
-      // 🎨 Default color pallet
-      fillPallete: [
+      xPallete: 4,
+      yPallete: 2,
+      fillPallete: [ // 🎨 Default color pallet
         "#ff2500",
         "#ff9305",
         "#fdfc00",
@@ -747,9 +760,12 @@ const App = {
         "#929292",
         "#000000"
       ],
-      options: false,
       copied: false,
       copiedFailed: false,
+      // App state
+      loading: true,
+      options: false,
+      ignore: false,
     };
   },
   computed: {
@@ -795,7 +811,6 @@ const App = {
     // Create grid and set default color to off
     //--------------------------------//
     setupColors: function () {
-      let string = "";
       for (let y = 0; y < this.y; y++) {
         for (let x = 0; x < this.x; x++) {
           this.fill.push(`#000000`);
@@ -843,24 +858,29 @@ const App = {
     //--------------------------------//
     // 🐵 Send API request
     //--------------------------------//
+    // POST request
     post: function () {
-      fetch(this.url, {
-        method: "POST",
-        body: this.json,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-        .then((response) => {
-          return response.json();
+      if (!this.ignore) {
+        fetch(this.url, {
+          method: "POST",
+          body: this.json,
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
         })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Fetch Error:", error);
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error("Fetch Error:", error);
+          });
+      }
+
     },
+    // GET request
     get: function () {
       fetch(this.url, {
         method: "GET",
@@ -883,17 +903,37 @@ const App = {
         })
         .catch((error) => {
           this.options = true;
+          // this.options = true;
           console.error("Fetch Error:", error);
         });
     },
     // END 🐵 Send API request --------------//
-    copy() {
+    //--------------------------------//
+    // Copy preset 
+    //--------------------------------//
+    copy: function () {
       const copyText = this.$refs.copy.innerText;
       navigator.clipboard.writeText(copyText).then(() => {
         this.copied = true;
       }, function (err) {
         this.copiedFailed = true;
         console.error("Failed to copy text: ", err);
+      });
+    },
+    // END Copy preset --------------//
+    ignoreNotice: function () {
+      this.ignore = true;
+      this.x = 16;
+      this.y = 16;
+      this.loading = false;
+      this.setupColors();
+    },
+    mapUrlParameters: function () {
+      const params = new URLSearchParams(window.location.search);
+      params.forEach((value, key) => {
+        if (Object.prototype.hasOwnProperty.call(this, key)) {
+          this[key] = value;
+        }
       });
     }
   },
@@ -903,9 +943,13 @@ const App = {
     },
     x: function (newData) {
       this.loading = false;
+      this.fill = [];
+      this.setupColors();
     },
     y: function (newData) {
       this.loading = false;
+      this.fill = [];
+      this.setupColors();
     },
     //--------------------------------//
     // 💾 Save everything to local storage
@@ -926,6 +970,9 @@ const App = {
   },
   mounted() {
     this.url = `http://${window.location.host}/json`;
+    if (thid.url === 'mvaneijgen.nl') {
+      this.ignoreNotice();
+    }
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
@@ -935,6 +982,8 @@ const App = {
     if (localStorage.fillPallete) this.fillPallete = localStorage.fillPallete.split(",");
     if (localStorage.timer) this.timer = localStorage.timer;
     // END 💾 Get everything from local storage  --------------//
+    this.mapUrlParameters()
+    // 
   },
 };
 

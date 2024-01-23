@@ -396,7 +396,15 @@ button {
   font-weight: 700;
   border: 0;
   margin-bottom: 20px;
+  transition: transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+
   // padding: 30px;
+  &:hover {
+    background-color: $brand-one;
+    color: $brand-dark;
+  }
 }
 
 .btn-alt {

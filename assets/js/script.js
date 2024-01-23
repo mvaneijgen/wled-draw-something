@@ -4,21 +4,22 @@ const { createApp } = Vue;
 const App = {
   data() {
     return {
-      loading: true,
+      // App info
       title: "Draw something",
       version: "1.2",
+      // WLED JSON
       url: "",
       size: 10,
       x: 1,
       y: 1,
-      xPallete: 4,
-      yPallete: 2,
       timer: 0,
+      fill: [],
+      // 🎛️ Controls
       color: "#ff2500",
       isMouseDown: false,
-      fill: [],
-      // 🎨 Default color pallet
-      fillPallete: [
+      xPallete: 4,
+      yPallete: 2,
+      fillPallete: [ // 🎨 Default color pallet
         "#ff2500",
         "#ff9305",
         "#fdfc00",
@@ -28,9 +29,12 @@ const App = {
         "#929292",
         "#000000"
       ],
-      options: false,
       copied: false,
       copiedFailed: false,
+      // App state
+      loading: true,
+      options: false,
+      ignore: false,
     };
   },
   computed: {
@@ -76,7 +80,6 @@ const App = {
     // Create grid and set default color to off
     //--------------------------------//
     setupColors: function () {
-      let string = "";
       for (let y = 0; y < this.y; y++) {
         for (let x = 0; x < this.x; x++) {
           this.fill.push(`#000000`);
@@ -124,24 +127,29 @@ const App = {
     //--------------------------------//
     // 🐵 Send API request
     //--------------------------------//
+    // POST request
     post: function () {
-      fetch(this.url, {
-        method: "POST",
-        body: this.json,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-        .then((response) => {
-          return response.json();
+      if (!this.ignore) {
+        fetch(this.url, {
+          method: "POST",
+          body: this.json,
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
         })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Fetch Error:", error);
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error("Fetch Error:", error);
+          });
+      }
+
     },
+    // GET request
     get: function () {
       fetch(this.url, {
         method: "GET",
@@ -164,17 +172,37 @@ const App = {
         })
         .catch((error) => {
           this.options = true;
+          // this.options = true;
           console.error("Fetch Error:", error);
         });
     },
     // END 🐵 Send API request --------------//
-    copy() {
+    //--------------------------------//
+    // Copy preset 
+    //--------------------------------//
+    copy: function () {
       const copyText = this.$refs.copy.innerText;
       navigator.clipboard.writeText(copyText).then(() => {
         this.copied = true;
       }, function (err) {
         this.copiedFailed = true;
         console.error("Failed to copy text: ", err);
+      });
+    },
+    // END Copy preset --------------//
+    ignoreNotice: function () {
+      this.ignore = true;
+      this.x = 16;
+      this.y = 16;
+      this.loading = false;
+      this.setupColors();
+    },
+    mapUrlParameters: function () {
+      const params = new URLSearchParams(window.location.search);
+      params.forEach((value, key) => {
+        if (Object.prototype.hasOwnProperty.call(this, key)) {
+          this[key] = value;
+        }
       });
     }
   },
@@ -184,9 +212,13 @@ const App = {
     },
     x: function (newData) {
       this.loading = false;
+      this.fill = [];
+      this.setupColors();
     },
     y: function (newData) {
       this.loading = false;
+      this.fill = [];
+      this.setupColors();
     },
     //--------------------------------//
     // 💾 Save everything to local storage
@@ -207,6 +239,9 @@ const App = {
   },
   mounted() {
     this.url = `http://${window.location.host}/json`;
+    if (thid.url === 'mvaneijgen.nl') {
+      this.ignoreNotice();
+    }
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
@@ -216,6 +251,8 @@ const App = {
     if (localStorage.fillPallete) this.fillPallete = localStorage.fillPallete.split(",");
     if (localStorage.timer) this.timer = localStorage.timer;
     // END 💾 Get everything from local storage  --------------//
+    this.mapUrlParameters()
+    // 
   },
 };
 

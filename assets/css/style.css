@@ -564,6 +564,13 @@ button {
   font-weight: 700;
   border: 0;
   margin-bottom: 20px;
+  transition: transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+button:hover {
+  background-color: #0ba;
+  color: #0c162d;
 }
 
 .btn-alt {

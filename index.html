@@ -7,12 +7,14 @@
   </head>
   <body>
     <div id="app">
+      <!-- Sidebar -->
       <aside>
         <div class="inner">
           <div class="title">
             <h1>{{ title }}</h1>
             <h3>Version {{version}}</h3>
           </div>
+          <!-- 🎛️ Controls -->
           <div class="controls">
             <div class="alloy-input-group">
               <label for="color">Current Color</label>
@@ -35,16 +37,13 @@
 
             <!-- <button @click="post">Send mannualy🚀</button> -->
             <div class="alloy-input-group">
-              <label for>❌ Clear current drawing</label>
-              <p>Does not update light</p>
-              <button class @click="clear">Clear</button>
+              <button class @click="clear">Clear sreen</button>
             </div>
 
+            <!-- Advanced settings -->
             <div class="alloy-input-group">
-              <button class="btn-alt" @click="options = !options">Advanced
-                settings</button>
+              <button class="btn-alt" @click="options = !options">Advanced settings</button>
             </div>
-
             <div class="alloy-input-group" v-if="options">
               <label for="url">API url</label>
               <input type="text" id="url" v-model="url">
@@ -52,37 +51,37 @@
             <div class="alloy-input-flex" v-if="options">
               <div class="alloy-input-group">
                 <label for="xAxis">Matrix W</label>
-                <input type="number" id="xAxis" v-model="x">
+                <input type="number" id="xAxis" v-model="x" pattern="[0-9]*" inputmode="numeric">
               </div>
               <div class="alloy-input-group" v-if="options">
                 <label for="yAxis">Matrix H</label>
-                <input type="number" id="yAxis" v-model="y">
+                <input type="number" id="yAxis" v-model="y" pattern="[0-9]*" inputmode="numeric">
               </div>
             </div>
-            <!-- <ul class="description">
-                  <li><strong>URL</strong> {{url}}</li>
-                  <li><strong>Matrix width</strong> {{x}}</li>
-                  <li><strong>Matrix height</strong> {{y}}</li>
-                </ul> -->
-
             <div class="alloy-input-group" v-if="options">
               <label for="timer">Timer (nightlight)</label>
-              <p class="description">Set a nightlight timer to {{timer}}
-                mintues. If zero no timer
-                would be set</p>
-              <input type="number" id="timer" v-model="timer">
+              <p class="description">Set a nightlight timer to {{timer}} mintues. If zero no timer would be set</p>
+              <input type="number" id="timer" v-model="timer" pattern="[0-9]*" inputmode="numeric">
             </div>
             <div class="alloy-input-group" v-if="options">
-              <label for="copy">Preset</label>
-              <p class="description">Save preset manually</p>
+              <label for="copy">Save preset manually</label>
               <pre id="copy" ref="copy">{{json}}</pre>
-              <button @click="copy"><span v-if="!copied">Copy preset</span>
-                <span
-                  v-if="copied">Copied!</span> </button>
-              <p v-if="copiedFailed">Failed to copy text, try copying
-                manually.</p>
+              <p v-if="copiedFailed">Failed to copy text, try copying manually.</p>
+              <button @click="copy" ><span v-if="!copied">Copy preset</span><span v-if="copied">Copied!</span> </button>
             </div>
+            <div class="alloy-input-group" v-if="options">
+              <label for>Things known about your matrix</label>
+              <ul class="description">
+                <li><strong>URL</strong> {{url}}</li>
+                <li><strong>Matrix width</strong> {{x}}</li>
+                <li><strong>Matrix height</strong> {{y}}</li>
+                <li><strong>Matrix led</strong> {{y * x}}</li>
+                <li><strong>Pixel art amount</strong> {{fill.length}}</li>
+              </ul>
+            </div>
+            <!-- Advanced settings -->
           </div>
+          <!-- 🎛️ END Controls -->
           <a href="https://studioalloy.nl" id="logo">
             <img src="https://studioalloy.nl/_nuxt/img/a293d3c.svg">
             <div>
@@ -92,14 +91,22 @@
           </a>
         </div>
       </aside>
+      <!-- END Sidebar -->
+      <!-- Notifications -->
       <div class="container" v-if="loading">
-        <div class="notice">
-          <h3>We're currently loading your settings. Make sure your matrix is
-            setup correclty. <i>Fetching {{url}}</i></h3>
-          <p>If you keep seeing this make sure you update your API endpoint
-            url eg <i>http://[device_ip_address]/json`</i></p>
+        <div class="notice" v-if="!options">
+          <h3>We're currently loading your settings. Make sure your matrix is setup correclty. <i>Fetching {{url}}</i></h3>
+          <p>If you keep seeing this make sure you update your API endpoint url eg <i>`http://[device_ip_address]/json`</i></p>
+        </div>
+
+        <div class="notice error" v-if="options">
+          <h3>We could not fetch your settings at <i>{{url}}</i></h3>
+          <p>You can change the url manually <input type="text" v-model="url"></p>
+          <p>Or just use the tool without the API connected</p>
+          <button class="btn-alt" @click="ignoreNotice">Just use the tool</button>
         </div>
       </div>
+      <!-- END Notifications -->
       <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
         v-if="!loading">
         <svg :view-box.camel="viewBox">
@@ -113,7 +120,6 @@
           </g>
         </svg>
       </div>
-
     </div>
     <script src='https://unpkg.com/vue@3/dist/vue.global.js'></script>
     <script src="./assets/js/script.js" inline></script>
