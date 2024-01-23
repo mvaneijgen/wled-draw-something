@@ -151,32 +151,30 @@ const App = {
     },
     // GET request
     get: function () {
-      if (!this.ignore) {
-        fetch(this.url, {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
+      fetch(this.url, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          this.x = data.info.leds.matrix.w;
+          this.y = data.info.leds.matrix.h;
+          this.options = false;
+          this.loading = false;
+          if (!localStorage.fill) {
+            this.setupColors();
           }
         })
-          .then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data);
-            this.x = data.info.leds.matrix.w;
-            this.y = data.info.leds.matrix.h;
-            this.options = false;
-            this.loading = false;
-            if (!localStorage.fill) {
-              this.setupColors();
-            }
-          })
-          .catch((error) => {
-            this.options = true;
-            // this.options = true;
-            console.error("Fetch Error:", error);
-          });
-      }
+        .catch((error) => {
+          this.options = true;
+          // this.options = true;
+          console.error("Fetch Error:", error);
+        });
     },
     // END 🐵 Send API request --------------//
     //--------------------------------//
@@ -197,6 +195,7 @@ const App = {
       this.x = 16;
       this.y = 16;
       this.loading = false;
+      this.options = false;
       this.setupColors();
     },
     mapUrlParameters: function () {
@@ -241,7 +240,6 @@ const App = {
   },
   mounted() {
     const host = window.location.host;
-    console.warn(host);
     this.url = `http://${host}/json`;
     if (host === 'mvaneijgen.nl') {
       this.ignoreNotice();
@@ -256,7 +254,6 @@ const App = {
     if (localStorage.timer) this.timer = localStorage.timer;
     // END 💾 Get everything from local storage  --------------//
     this.mapUrlParameters()
-    // 
   },
 };
 
