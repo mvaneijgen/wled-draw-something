@@ -37,7 +37,7 @@
 
             <!-- <button @click="post">Send mannualy🚀</button> -->
             <div class="alloy-input-group">
-              <button class @click="clear">Clear sreen</button>
+              <button class @click="clear">Clear screen</button>
             </div>
 
             <!-- Advanced settings -->
@@ -109,6 +109,7 @@
       </div>
       <!-- END Notifications -->
       <div class="view" @mousedown="mouseDown" @mouseup="mouseUp"
+      @touchstart="mouseDown" @mouseup="touchend"
         v-if="!loading">
         <svg :view-box.camel="viewBox">
           <g v-for="(item, yIndex) in y">
