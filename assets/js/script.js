@@ -35,7 +35,7 @@ const App = {
       loading: true,
       options: false,
       ignore: false,
-      demo: true,
+      demo: false,
     };
   },
   computed: {
