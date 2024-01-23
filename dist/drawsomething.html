@@ -882,30 +882,32 @@ const App = {
     },
     // GET request
     get: function () {
-      fetch(this.url, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        }
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          this.x = data.info.leds.matrix.w;
-          this.y = data.info.leds.matrix.h;
-          this.options = false;
-          this.loading = false;
-          if (!localStorage.fill) {
-            this.setupColors();
+      if (!this.ignore) {
+        fetch(this.url, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
           }
         })
-        .catch((error) => {
-          this.options = true;
-          // this.options = true;
-          console.error("Fetch Error:", error);
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            this.x = data.info.leds.matrix.w;
+            this.y = data.info.leds.matrix.h;
+            this.options = false;
+            this.loading = false;
+            if (!localStorage.fill) {
+              this.setupColors();
+            }
+          })
+          .catch((error) => {
+            this.options = true;
+            // this.options = true;
+            console.error("Fetch Error:", error);
+          });
+      }
     },
     // END 🐵 Send API request --------------//
     //--------------------------------//
