@@ -68,9 +68,9 @@
             </div>
 
             <!-- Advanced settings -->
-            <div class="alloy-input-group" v-if="options">
+            <div class="alloy-input-group" v-if="options && !demo">
               <label for="url">API url</label>
-              <p v-if="demo">You can't use the API on the demo page</p>
+              <p>You can't use the API on the demo page</p>
               <input type="text" id="url" v-model="url" :disabled="demo ? '' : disabled">
             </div>
             <div class="alloy-input-flex" v-if="options">
@@ -94,7 +94,7 @@
               <p v-if="copiedFailed">Failed to copy text, try copying manually.</p>
               <button @click="copy" ><span v-if="!copied">Copy preset</span><span v-if="copied">Copied!</span> </button>
             </div>
-            <div class="alloy-input-group" v-if="options">
+            <!-- <div class="alloy-input-group" v-if="options">
               <label for>Things known about your matrix</label>
               <ul class="description">
                 <li><strong>URL</strong> {{url}}</li>
@@ -103,7 +103,7 @@
                 <li><strong>Matrix led</strong> {{y * x}}</li>
                 <li><strong>Pixel art amount</strong> {{fill.length}}</li>
               </ul>
-            </div>
+            </div> -->
             <!-- Advanced settings -->
           </div>
           <!-- 🎛️ END Controls -->
