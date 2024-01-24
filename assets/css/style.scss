@@ -395,6 +395,7 @@ input[type="checkbox"] {
   transform: translateY(6px);
 }
 
+.btn,
 button {
   width: 100%;
   padding: 10px;
@@ -414,10 +415,20 @@ button {
   }
 }
 
+.btn {
+  background-color: $brand-one;
+  color: $brand-dark;
+
+  &:hover {
+    background-color: $brand-two;
+    color: $brand-light;
+  }
+}
+
 .btn-alt {
   background-color: #ccc;
   color: $brand-dark;
-  padding: 10px;
+
 }
 
 button[disabled] {
@@ -447,4 +458,13 @@ pre {
   font-size: 0.8rem;
   max-width: 100%;
   width: 240px;
+}
+
+.back-to-wled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  text-decoration: none;
+  font-size: 14px;
 }

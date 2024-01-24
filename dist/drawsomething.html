@@ -574,6 +574,7 @@ input[type=checkbox] {
   transform: translateY(6px);
 }
 
+.btn,
 button {
   width: 100%;
   padding: 10px;
@@ -586,15 +587,24 @@ button {
   transition-duration: 300ms;
   transition-timing-function: ease;
 }
+.btn:hover,
 button:hover {
   background-color: #0ba;
   color: #0c162d;
 }
 
+.btn {
+  background-color: #0ba;
+  color: #0c162d;
+}
+.btn:hover {
+  background-color: #f53;
+  color: #fff;
+}
+
 .btn-alt {
   background-color: #ccc;
   color: #0c162d;
-  padding: 10px;
 }
 
 button[disabled] {
@@ -623,6 +633,15 @@ pre {
   font-size: 0.8rem;
   max-width: 100%;
   width: 240px;
+}
+
+.back-to-wled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  text-decoration: none;
+  font-size: 14px;
 }/*# sourceMappingURL=style.css.map */</style>
 	<!-- HTML Meta Tags -->
 <title>WLED Draw Something</title>
@@ -660,6 +679,7 @@ pre {
             <h3>Version {{version}}</h3>
             <p v-if="demo" class="description">Demo mode is activated. For the best use of this tool install it in to your WLED controller, see <a href="https://github.com/mvaneijgen/wled-draw-something#use-the-tool">install guide on Github!</a></p>
           </div>
+          <a class="btn btn-two back-to-wled" v-if="wledUrl" :href="wledUrl">⬅ Go back to WLED</a>
           <!-- 🎛️ Controls -->
           <div class="controls">
             <div class="alloy-input-group">
@@ -780,6 +800,7 @@ const App = {
       version: "1.2",
       // WLED JSON
       url: "",
+      wledUrl: "",
       size: 10,
       x: 16,
       y: 16,
@@ -941,6 +962,9 @@ const App = {
         })
         .then((data) => {
           console.log(data);
+          const url = new URL(this.url);
+          const domain = `${url.protocol}//${url.hostname}`;
+          this.wledUrl = domain;
           this.x = data.info.leds.matrix.w;
           this.y = data.info.leds.matrix.h;
           localStorage.x = this.x;

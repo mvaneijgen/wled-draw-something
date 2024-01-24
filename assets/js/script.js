@@ -9,6 +9,7 @@ const App = {
       version: "1.2",
       // WLED JSON
       url: "",
+      wledUrl: "",
       size: 10,
       x: 16,
       y: 16,
@@ -170,6 +171,9 @@ const App = {
         })
         .then((data) => {
           console.log(data);
+          const url = new URL(this.url);
+          const domain = `${url.protocol}//${url.hostname}`;
+          this.wledUrl = domain;
           this.x = data.info.leds.matrix.w;
           this.y = data.info.leds.matrix.h;
           localStorage.x = this.x;
