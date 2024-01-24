@@ -69,9 +69,9 @@
             </div>
 
             <!-- Advanced settings -->
-            <div class="alloy-input-group" v-if="options && !demo">
+            <div class="alloy-input-group" v-if="options">
               <label for="url">API url</label>
-              <p>You can't use the API on the demo page</p>
+              <p v-if="demo">You can't use the API on the demo page</p>
               <input type="text" id="url" v-model="url" :disabled="demo ? '' : disabled">
             </div>
             <div class="alloy-input-flex" v-if="options">

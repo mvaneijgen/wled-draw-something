@@ -28,7 +28,7 @@ I've made this tool so I could send pixel art to my SO, just as a fun way to lea
 - [ ] Setup proper JSON object
 - [ ] Load current image
 - [ ] Undo/redo
-- [ ] Propper build step, complile scss, setup local server and run `node build.js` on changes
+- [ ] Propper build step, complile scss, setup local server and run `node build.js` on changes (was looking in to Vite.js)
 
 ## Tools used
 This tool is build using Vue.js and there is some SCSS to easily write CSS
