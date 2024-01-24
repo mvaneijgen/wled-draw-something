@@ -1,6 +1,10 @@
 {
-  "dependencies": {
+  "name": "wled-draw-something",
+  "version": "1.0.0",
+  "devDependencies": {
+    "dev": "nodemon build.js",
     "cheerio": "^1.0.0-rc.12",
-    "fs-extra": "^11.2.0"
+    "fs-extra": "^11.2.0",
+    "nodemon": "^3.0.3"
   }
 }
