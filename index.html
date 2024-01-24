@@ -65,7 +65,7 @@
             <div class="alloy-input-group">
               <button class @click="clear">Clear screen</button>
               <button class="btn-alt"
-                @click="options = !options">Advanced settings</button>
+                @click="options = !options">Advanced settings {{options}}</button>
             </div>
 
             <!-- Advanced settings -->
@@ -77,11 +77,11 @@
             <div class="alloy-input-flex" v-if="options">
               <div class="alloy-input-group">
                 <label for="xAxis">Matrix W</label>
-                <input type="number" id="xAxis" v-model="x" pattern="[0-9]*" inputmode="numeric">
+                <input type="number" id="xAxis" v-model="x" pattern="[0-9]*" min="1" inputmode="numeric">
               </div>
               <div class="alloy-input-group" v-if="options">
                 <label for="yAxis">Matrix H</label>
-                <input type="number" id="yAxis" v-model="y" pattern="[0-9]*" inputmode="numeric">
+                <input type="number" id="yAxis" v-model="y" pattern="[0-9]*" min="1" inputmode="numeric">
               </div>
             </div>
             <div class="alloy-input-group" v-if="options">

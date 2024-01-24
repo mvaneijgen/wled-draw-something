@@ -75,15 +75,18 @@ const App = {
   methods: {
     clear: function () {
       this.fill = [];
+      localStorage.fill = this.fill.toString();
       this.setupColors();
     },
     //--------------------------------//
     // Create grid and set default color to off
     //--------------------------------//
     setupColors: function () {
+      let color = `#000000`;
+      const local = localStorage.fill.split(',');
       for (let y = 0; y < this.y; y++) {
         for (let x = 0; x < this.x; x++) {
-          this.fill.push(`#000000`);
+          this.fill.push(local[x + this.x * y] !== "" ? local[x + this.x * y] : color);
         }
       }
     },
@@ -239,11 +242,13 @@ const App = {
       this.loading = false;
       this.fill = [];
       this.setupColors();
+      // localStorage.x = this.x
     },
     y: function (newData) {
       this.loading = false;
       this.fill = [];
       this.setupColors();
+      // localStorage.y = this.y
     },
     //--------------------------------//
     // 💾 Save everything to local storage
@@ -272,11 +277,15 @@ const App = {
     //--------------------------------//
     // 💾 Get everything from local storage
     //--------------------------------//
-    // if (localStorage.url) this.url = localStorage.url; // Enable
+    // Controls to local storage
     if (localStorage.color) this.color = localStorage.color;
-    if (localStorage.fill) this.fill = localStorage.fill.split(",");
     if (localStorage.fillPallete) this.fillPallete = localStorage.fillPallete.split(",");
     if (localStorage.timer) this.timer = localStorage.timer;
+
+    // Matrixto local storage
+    // if (localStorage.fill) this.fill = localStorage.fill;
+    // if (localStorage.x) this.x = localStorage.x;
+    // if (localStorage.y) this.y = localStorage.y;
     // END 💾 Get everything from local storage  --------------//
     this.mapUrlParameters()
   },
