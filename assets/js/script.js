@@ -10,8 +10,8 @@ const App = {
       // WLED JSON
       url: "",
       size: 10,
-      x: 1,
-      y: 1,
+      x: 16,
+      y: 16,
       timer: 0,
       fill: [],
       // 🎛️ Controls
@@ -224,8 +224,6 @@ const App = {
     // END Copy preset --------------//
     ignoreNotice: function () {
       this.ignore = true;
-      this.x = 16;
-      this.y = 16;
       this.loading = false;
       this.options = false;
       this.setupColors();
