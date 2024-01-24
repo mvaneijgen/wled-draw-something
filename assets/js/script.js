@@ -87,6 +87,7 @@ const App = {
       if (localStorage.fill) {
         local = localStorage.fill.split(',');
       }
+      console.warn(`${this.x} ${this.y}`);
       for (let y = 0; y < this.y; y++) {
         for (let x = 0; x < this.x; x++) {
           this.fill.push(local[x + this.x * y] !== "" ? local[x + this.x * y] : color);
@@ -212,7 +213,6 @@ const App = {
         }
       } else {
         const copyText = this.$refs.copy.innerText;
-        console.warn(navigator);
         navigator.clipboard.writeText(copyText).then(() => {
           this.copied = true;
         }, function (err) {
@@ -244,14 +244,13 @@ const App = {
     x: function (newData) {
       this.loading = false;
       this.fill = [];
-      localStorage.x = this.x
+      localStorage.x = this.x;
       this.setupColors();
     },
     y: function (newData) {
-      console.warn(this.y);
       this.loading = false;
       this.fill = [];
-      localStorage.y = this.y
+      localStorage.y = this.y;
       this.setupColors();
     },
     //--------------------------------//
@@ -287,10 +286,10 @@ const App = {
     if (localStorage.timer) this.timer = localStorage.timer;
 
     // Matrix to local storage
-    if (localStorage.x) this.x = localStorage.x;
-    if (localStorage.y) this.y = localStorage.y;
+    if (localStorage.x) this.x = Number(localStorage.x);
+    if (localStorage.y) this.y = Number(localStorage.y);
     // END 💾 Get everything from local storage  --------------//
-    this.mapUrlParameters()
+    this.mapUrlParameters(); // Set URL parameters to data attr 
   },
   // created() {
   //   const host = window.location.host;

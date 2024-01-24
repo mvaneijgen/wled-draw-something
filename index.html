@@ -138,7 +138,7 @@
         v-if="!loading">
         <svg :view-box.camel="viewBox">
           <g v-for="(item, yIndex) in y">
-            <rect v-for="(item, xIndex) in x" :key="xIndex" :x="size * xIndex"
+            <rect v-for="(item, xIndex) in x" :x="size * xIndex"
               :y="size * yIndex" :width="size" :height="size" stroke="#19233b"
               :fill="fill[xIndex + x*yIndex]" @mousedown="setColor"
               @mouseover="dragColor"
