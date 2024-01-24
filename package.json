@@ -1,11 +1,5 @@
 {
-  "name": "wled-draw-something",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/mvaneijgen/wled-draw-something.git",
-  "author": "mvaneijgen <mvaneijgen@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "fs-extra": "^11.2.0"
   }
